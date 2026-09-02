@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog - Arnacon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css" />
+  <style>
+    .blog-container { max-width: 1180px; margin: 0 auto; padding: 96px 20px 120px; }
+    .blog-header { text-align: center; margin-bottom: 48px; }
+    .blog-header h1 { font-size: 48px; letter-spacing: -.04em; margin-bottom: 14px; }
+    .blog-header p { color: var(--muted); font-size: 18px; }
+    
+    .search-bar {
+      max-width: 520px; margin: 0 auto 28px;
+      position: relative;
+    }
+    .search-bar input {
+      width: 100%; padding: 14px 18px; border-radius: 16px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--line);
+      color: var(--ink); font-family: inherit; font-size: 15px;
+    }
+    .search-bar input::placeholder { color: var(--muted); }
+    .search-bar input:focus {
+      outline: none; border-color: var(--violet-2);
+      box-shadow: 0 0 0 3px rgba(139,92,246,.15);
+    }
+
+    .tag-filters {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 48px;
+    }
+    .tag-chip {
+      font-size: 13px; padding: 8px 16px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255,255,255,.03);
+      color: var(--muted); cursor: pointer; transition: all .2s;
+    }
+    .tag-chip:hover, .tag-chip.active {
+      color: white; border-color: var(--violet);
+      background: rgba(139,92,246,.15);
+    }
+
+    .posts-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px; margin-bottom: 64px;
+    }
+    .post-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid var(--line); border-radius: 20px; overflow: hidden;
+      transition: transform .2s, box-shadow .2s; cursor: pointer;
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(139,92,246,.2);
+    }
+    .post-card-image {
+      width: 100%; height: 200px; object-fit: cover;
+      background: linear-gradient(135deg, #1a1430, #0b1020);
+    }
+    .post-card-content { padding: 24px; }
+    .post-card-title {
+      font-size: 22px; font-weight: 600; letter-spacing: -.03em;
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .post-card-excerpt {
+      color: var(--muted); font-size: 15px; line-height: 1.5;
+      margin-bottom: 16px; display: -webkit-box;
+      -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .post-card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; color: var(--muted); margin-bottom: 16px;
+    }
+    .post-card-actions {
+      display: flex; gap: 8px;
+    }
+    .post-card-actions .btn-sm {
+      flex: 1; padding: 10px; text-align: center; border-radius: 12px;
+      font-size: 13px; font-weight: 600; border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .post-card-actions .btn-sm.primary {
+      background: var(--violet); border-color: var(--violet); color: white;
+    }
+
+    .post-view {
+      max-width: 780px; margin: 0 auto; display: none;
+    }
+    .post-view.active { display: block; }
+    .post-header-image {
+      width: 100%; height: 400px; object-fit: cover; border-radius: 20px;
+      margin-bottom: 32px; background: linear-gradient(135deg, #1a1430, #0b1020);
+    }
+    .post-title { font-size: 52px; letter-spacing: -.045em; line-height: 1.05; margin-bottom: 24px; }
+    .post-meta {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 24px; margin-bottom: 32px; border-bottom: 1px solid var(--line);
+      color: var(--muted); font-size: 14px;
+    }
+    .post-meta strong { color: var(--ink); }
+    .post-content {
+      font-size: 17px; line-height: 1.7; color: #e5e7f2;
+    }
+    .post-content h1, .post-content h2, .post-content h3 {
+      color: var(--ink); margin-top: 32px; margin-bottom: 16px;
+      letter-spacing: -.03em; line-height: 1.2;
+    }
+    .post-content h1 { font-size: 38px; }
+    .post-content h2 { font-size: 32px; }
+    .post-content h3 { font-size: 24px; }
+    .post-content p { margin-bottom: 20px; }
+    .post-content a { color: var(--violet-2); text-decoration: underline; }
+    .post-content ul, .post-content ol { margin: 20px 0; padding-left: 28px; }
+    .post-content li { margin-bottom: 10px; }
+    .post-content code {
+      background: rgba(255,255,255,.08); padding: 2px 6px; border-radius: 4px;
+      font-family: ui-monospace, monospace; font-size: .9em;
+    }
+    .post-content pre {
+      background: rgba(255,255,255,.05); border: 1px solid var(--line);
+      padding: 16px; border-radius: 12px; overflow-x: auto; margin: 24px 0;
+    }
+    .post-content pre code { background: none; padding: 0; }
+    .post-content blockquote {
+      border-left: 3px solid var(--violet); padding-left: 20px;
+      margin: 24px 0; color: var(--muted); font-style: italic;
+    }
+    .post-content img { max-width: 100%; border-radius: 12px; margin: 24px 0; }
+
+    .post-tags {
+      display: flex; gap: 8px; flex-wrap: wrap; margin: 32px 0;
+    }
+    .post-tag {
+      font-size: 12px; padding: 6px 12px; border-radius: 999px;
+      background: rgba(139,92,246,.12); border: 1px solid rgba(139,92,246,.3);
+      color: #c4b5fd;
+    }
+
+    .post-actions {
+      display: flex; gap: 12px; margin: 48px 0;
+    }
+    .wallet-info {
+      background: rgba(139,92,246,.08); border: 1px solid rgba(139,92,246,.25);
+      padding: 16px; border-radius: 12px; margin: 32px 0;
+    }
+    .wallet-info a { color: var(--violet-2); text-decoration: none; font-weight: 600; }
+
+    .featured-posts {
+      margin-top: 64px; padding-top: 48px; border-top: 1px solid var(--line);
+    }
+    .featured-posts h3 {
+      font-size: 28px; margin-bottom: 28px; text-align: center;
+      letter-spacing: -.03em;
+    }
+
+    .empty-state, .loading-state, .error-state {
+      text-align: center; padding: 80px 20px;
+    }
+    .empty-state h3, .loading-state h3, .error-state h3 {
+      font-size: 24px; margin-bottom: 12px;
+    }
+    .empty-state p, .loading-state p, .error-state p {
+      color: var(--muted); font-size: 16px;
+    }
+
+    .new-post-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 40;
+      display: none; align-items: center; gap: 8px;
+      padding: 14px 24px; border-radius: 999px;
+      background: linear-gradient(180deg, #a78bfa, #7c3aed);
+      box-shadow: 0 8px 32px var(--glow); font-weight: 600;
+      font-size: 15px; color: white; border: none; cursor: pointer;
+    }
+    .new-post-btn:hover { transform: translateY(-2px); }
+    body[data-wallet-connected="true"] .new-post-btn { display: flex; }
+
+    @media (max-width: 768px) {
+      .blog-container { padding: 64px 16px 100px; }
+      .blog-header h1 { font-size: 36px; }
+      .posts-grid { grid-template-columns: 1fr; }
+      .post-title { font-size: 36px; }
+      .post-header-image { height: 240px; }
+      .new-post-btn { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href="index.html"><img class="mark" src="arnacon-logo.svg?v=4" alt="Arnacon" />Arnacon</a>
+    <div class="nav-cta">
+      <a class="ghost" href="privacy.html">Privacy</a>
+      <a class="ghost" href="demo.html">Demo</a>
+      <appkit-button id="wallet-btn"></appkit-button>
+    </div>
+  </nav>
+
+  <div class="blog-container">
+    <div id="blog-list">
+      <div class="blog-header">
+        <h1>Blog</h1>
+        <p>Insights and updates from the Arnacon community</p>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search posts..." />
+      </div>
+
+      <div class="tag-filters" id="tag-filters"></div>
+
+      <div class="loading-state" id="loading-state">
+        <h3>Loading posts...</h3>
+        <p>Fetching the latest content</p>
+      </div>
+
+      <div class="error-state" id="error-state" style="display: none;">
+        <h3>Unable to load posts</h3>
+        <p>Please try again later</p>
+      </div>
+
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <h3>No posts found</h3>
+        <p>Try adjusting your search or filters</p>
+      </div>
+
+      <div class="posts-grid" id="posts-grid"></div>
+    </div>
+
+    <div id="post-view" class="post-view"></div>
+  </div>
+
+  <button class="new-post-btn" onclick="window.location='blog-new.html'">
+    <span>+ New Post</span>
+  </button>
+
+  <footer class="wrap">
+    <span>© 2026 Arnacon</span>
+    <a href="privacy.html">Privacy</a>
+    <a href="https://www.arnacon.com/tandc">Terms</a>
+    <a href="mailto:support@arnacon.com">support@arnacon.com</a>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore, collection, query, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+    import { createAppKit } from 'https://cdn.jsdelivr.net/npm/@reown/appkit@1.7.0/+esm';
+    import { EthersAdapter } from 'https://cdn.jsdelivr.net/npm/@reown/appkit-adapter-ethers@1.7.0/+esm';
+    import { mainnet, polygon } from 'https://cdn.jsdelivr.net/npm/@reown/appkit@1.7.0/networks/+esm';
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqyYGQtdiaHRL5xQYv7ZO-hDbARAIZlmw",
+      authDomain: "arnacon-production-gcp.firebaseapp.com",
+      projectId: "arnacon-production-gcp",
+      storageBucket: "arnacon-production-gcp.appspot.com",
+      messagingSenderId: "343948402138",
+      appId: "1:343948402138:web:507c19ea2648df0ddbb4e3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Reown AppKit config
+    const projectId = '2217f1bdaf9856078d15617a25f6bb93';
+    const metadata = {
+      name: 'Arnacon Blog',
+      description: 'Arnacon Blog Platform',
+      url: window.location.origin,
+      icons: ['https://arnacon.com/arnacon-logo.svg']
+    };
+
+    const modal = createAppKit({
+      adapters: [new EthersAdapter()],
+      networks: [polygon, mainnet],
+      metadata,
+      projectId,
+      features: {
+        analytics: false
+      }
+    });
+
+    // Wallet connection handlers
+    modal.subscribeState((state) => {
+      const isConnected = state.open === false && state.selectedNetworkId;
+      if (isConnected && modal.getAddress()) {
+        const address = modal.getAddress();
+        localStorage.setItem('walletConnected', 'true');
+        localStorage.setItem('walletAddress', address);
+        document.body.setAttribute('data-wallet-connected', 'true');
+        window.dispatchEvent(new CustomEvent('wallet_connected', { detail: { address } }));
+      } else {
+        localStorage.removeItem('walletConnected');
+        localStorage.removeItem('walletAddress');
+        document.body.removeAttribute('data-wallet-connected');
+        window.dispatchEvent(new CustomEvent('wallet_disconnected'));
+      }
+    });
+
+    // Restore wallet state
+    if (localStorage.getItem('walletConnected') === 'true') {
+      document.body.setAttribute('data-wallet-connected', 'true');
+    }
+
+    let allPosts = [];
+    let filteredPosts = [];
+    let selectedTag = 'All';
+
+    // Load posts from Firestore
+    async function loadPosts() {
+      try {
+        const q = query(collection(db, 'blogPosts'), orderBy('date', 'desc'));
+        const querySnapshot = await getDocs(q);
+        
+        allPosts = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        filteredPosts = [...allPosts];
+        
+        document.getElementById('loading-state').style.display = 'none';
+        
+        if (allPosts.length === 0) {
+          document.getElementById('empty-state').style.display = 'block';
+        } else {
+          renderTagFilters();
+          renderPosts();
+          
+          // Check URL for post ID
+          const urlParams = new URLSearchParams(window.location.search);
+          const postId = urlParams.get('p');
+          if (postId) {
+            showPost(postId);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('error-state').style.display = 'block';
+      }
+    }
+
+    // Get all unique tags
+    function getAllTags() {
+      const tagsSet = new Set();
+      allPosts.forEach(post => {
+        if (post.tags && Array.isArray(post.tags)) {
+          post.tags.forEach(tag => tagsSet.add(tag));
+        }
+      });
+      return ['All', ...Array.from(tagsSet).sort()];
+    }
+
+    // Render tag filters
+    function renderTagFilters() {
+      const tags = getAllTags();
+      const container = document.getElementById('tag-filters');
+      container.innerHTML = tags.map(tag => 
+        `<button class="tag-chip ${tag === selectedTag ? 'active' : ''}" data-tag="${tag}">${tag}</button>`
+      ).join('');
+
+      container.querySelectorAll('.tag-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          selectedTag = chip.dataset.tag;
+          filterPosts();
+        });
+      });
+    }
+
+    // Filter posts
+    function filterPosts() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      
+      filteredPosts = allPosts.filter(post => {
+        const matchesTag = selectedTag === 'All' || (post.tags && post.tags.includes(selectedTag));
+        const matchesSearch = !searchTerm || 
+          post.title?.toLowerCase().includes(searchTerm) ||
+          post.excerpt?.toLowerCase().includes(searchTerm) ||
+          post.content?.toLowerCase().includes(searchTerm);
+        return matchesTag && matchesSearch;
+      });
+
+      renderTagFilters();
+      renderPosts();
+    }
+
+    // Convert IPFS URLs
+    function convertIPFS(url) {
+      if (!url) return '';
+      if (url.startsWith('ipfs://')) {
+        return url.replace('ipfs://', 'https://ipfs.io/ipfs/');
+      }
+      return url;
+    }
+
+    // Render posts
+    function renderPosts() {
+      const container = document.getElementById('posts-grid');
+      
+      if (filteredPosts.length === 0) {
+        document.getElementById('empty-state').style.display = 'block';
+        container.innerHTML = '';
+        return;
+      }
+
+      document.getElementById('empty-state').style.display = 'none';
+      
+      container.innerHTML = filteredPosts.map(post => {
+        const imageUrl = convertIPFS(post.headerImageUrl);
+        const date = post.date?.toDate ? post.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Unknown date';
+        
+        return `
+          <div class="post-card" onclick="showPost('${post.id}')">
+            ${imageUrl ? `<img class="post-card-image" src="${imageUrl}" alt="${post.title || 'Post'}" loading="lazy" />` : '<div class="post-card-image"></div>'}
+            <div class="post-card-content">
+              <h3 class="post-card-title">${post.title || 'Untitled'}</h3>
+              <p class="post-card-excerpt">${post.excerpt || ''}</p>
+              <div class="post-card-meta">
+                <span>${date}</span>
+                ${post.readTime ? `<span>${post.readTime} min read</span>` : ''}
+              </div>
+              <div class="post-card-actions">
+                <button class="btn-sm" onclick="event.stopPropagation(); sharePost('${post.id}', '${(post.title || '').replace(/'/g, "\\'")}')">Share</button>
+                <button class="btn-sm primary">Read more</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Parse markdown to HTML
+    function parseMarkdown(md) {
+      if (!md) return '';
+      
+      let html = md
+        // Headers
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // Bold
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        // Italic
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        // Links
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+        // Images
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
+        // Code blocks
+        .replace(/```(\w+)?\n([\s\S]+?)```/g, '<pre><code>$2</code></pre>')
+        // Inline code
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        // Blockquotes
+        .replace(/^> (.+)/gim, '<blockquote>$1</blockquote>')
+        // Lists
+        .replace(/^\* (.+)/gim, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        // Line breaks
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br />');
+      
+      return `<p>${html}</p>`.replace(/<p><\/p>/g, '').replace(/<p>(<h[1-3]>)/g, '$1').replace(/(<\/h[1-3]>)<\/p>/g, '$1');
+    }
+
+    // Show post
+    window.showPost = function(postId) {
+      const post = allPosts.find(p => p.id === postId);
+      if (!post) return;
+
+      const imageUrl = convertIPFS(post.headerImageUrl);
+      const date = post.date?.toDate ? post.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown date';
+      const content = parseMarkdown(post.content || '');
+      
+      // Get 3 other posts for featured section
+      const otherPosts = allPosts.filter(p => p.id !== postId).slice(0, 3);
+      
+      document.getElementById('blog-list').style.display = 'none';
+      const postView = document.getElementById('post-view');
+      postView.className = 'post-view active';
+      
+      postView.innerHTML = `
+        <div class="post-actions">
+          <button class="btn" onclick="backToBlog()">← Back to Blog</button>
+          <button class="ghost" onclick="sharePost('${post.id}', '${(post.title || '').replace(/'/g, "\\'")}')">Share</button>
+        </div>
+
+        ${imageUrl ? `<img class="post-header-image" src="${imageUrl}" alt="${post.title || 'Post'}" />` : ''}
+        
+        <h1 class="post-title">${post.title || 'Untitled'}</h1>
+        
+        <div class="post-meta">
+          ${post.author ? `<span><strong>By</strong> ${post.author}</span>` : ''}
+          <span><strong>Published</strong> ${date}</span>
+          ${post.readTime ? `<span><strong>Read time</strong> ${post.readTime} min</span>` : ''}
+        </div>
+
+        ${post.address || post.walletAddress ? `
+          <div class="wallet-info">
+            <strong>Author wallet:</strong> 
+            <a href="https://etherscan.io/address/${post.address || post.walletAddress}" target="_blank" rel="noopener">
+              ${post.address || post.walletAddress}
+            </a>
+          </div>
+        ` : ''}
+
+        <div class="post-content">${content}</div>
+
+        ${post.tags && post.tags.length > 0 ? `
+          <div class="post-tags">
+            ${post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
+          </div>
+        ` : ''}
+
+        ${otherPosts.length > 0 ? `
+          <div class="featured-posts">
+            <h3>More from the blog</h3>
+            <div class="posts-grid">
+              ${otherPosts.map(p => {
+                const pImageUrl = convertIPFS(p.headerImageUrl);
+                const pDate = p.date?.toDate ? p.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Unknown date';
+                return `
+                  <div class="post-card" onclick="showPost('${p.id}')">
+                    ${pImageUrl ? `<img class="post-card-image" src="${pImageUrl}" alt="${p.title || 'Post'}" loading="lazy" />` : '<div class="post-card-image"></div>'}
+                    <div class="post-card-content">
+                      <h3 class="post-card-title">${p.title || 'Untitled'}</h3>
+                      <p class="post-card-excerpt">${p.excerpt || ''}</p>
+                      <div class="post-card-meta">
+                        <span>${pDate}</span>
+                        ${p.readTime ? `<span>${p.readTime} min read</span>` : ''}
+                      </div>
+                      <div class="post-card-actions">
+                        <button class="btn-sm primary">Read more</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      window.history.pushState({ postId }, '', `blog.html?p=${postId}`);
+      window.scrollTo(0, 0);
+    };
+
+    // Back to blog list
+    window.backToBlog = function() {
+      document.getElementById('blog-list').style.display = 'block';
+      document.getElementById('post-view').className = 'post-view';
+      window.history.pushState({}, '', 'blog.html');
+      window.scrollTo(0, 0);
+    };
+
+    // Share post
+    window.sharePost = function(postId, title) {
+      const url = `${window.location.origin}/blog.html?p=${postId}`;
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          alert('Link copied to clipboard!');
+        });
+      }
+    };
+
+    // Search handler
+    document.getElementById('search-input').addEventListener('input', filterPosts);
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', (e) => {
+      if (e.state?.postId) {
+        showPost(e.state.postId);
+      } else {
+        backToBlog();
+      }
+    });
+
+    // Load posts on page load
+    loadPosts();
+
+    // Analytics (only on arnacon.com)
+    (function(){
+      var h = (location.hostname||'').replace(/^www\./,'').toLowerCase();
+      if (h !== 'arnacon.com') return;
+      fetch('https://europe-west1-arnacon-production-gcp.cloudfunctions.net/website-analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page: location.pathname + location.search,
+          referrer: document.referrer || 'direct',
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          screenWidth: innerWidth,
+          screenHeight: innerHeight,
+          timestamp: new Date().toISOString()
+        }),
+        keepalive: true
+      }).catch(function(){});
+    })();
+  </script>
+</body>
+</html>
