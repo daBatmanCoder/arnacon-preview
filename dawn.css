@@ -75,7 +75,7 @@ h3 {
 }
 
 /* Navigation */
-nav {
+body > nav {
   position: sticky;
   top: 12px;
   z-index: 100;
@@ -854,7 +854,7 @@ footer {
     min-height: 300px;
   }
 
-  nav {
+  body > nav {
     padding: 10px 14px;
   }
 

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="dawn.css?v=10">
+  <link rel="stylesheet" href="dawn.css?v=11">
   <style>
     .nav-links a.current { color: var(--ink); }
     html { scroll-padding-top: 88px; }
@@ -34,6 +34,20 @@
     }
     .docs-rail::-webkit-scrollbar { width: 6px; }
     .docs-rail::-webkit-scrollbar-thumb { background: rgba(42,28,24,.12); border-radius: 99px; }
+
+    .docs-nav {
+      display: block;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      border-radius: 0;
+      position: static;
+      backdrop-filter: none;
+      justify-content: unset;
+      align-items: stretch;
+    }
 
     .docs-onpage {
       display: none;
@@ -237,7 +251,7 @@
   <div class="docs-shell">
     <aside class="docs-rail">
       <p class="docs-onpage">On this page</p>
-      <nav class="docs-nav" aria-label="Docs">
+      <div class="docs-nav" role="navigation" aria-label="Docs">
         <div class="docs-group">
           <span class="docs-group-label">Get started</span>
           <a href="#install">Install</a>
@@ -266,7 +280,7 @@
           <span class="docs-group-label">Repos</span>
           <a href="#repos">Repos</a>
         </div>
-      </nav>
+      </div>
     </aside>
 
     <div class="docs-article">
