@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #0c0c0e; color: #eee; }
+    #status { margin-top: 20px; padding: 15px; border-radius: 8px; }
+    .success { background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; }
+    .error { background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; }
+    .loading { background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6; }
+    pre { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Arnacon Blog - Firebase Connection Test</h1>
+  <div id="status" class="loading">Testing Firebase connection...</div>
+  <div id="results"></div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore, collection, query, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqyYGQtdiaHRL5xQYv7ZO-hDbARAIZlmw",
+      authDomain: "arnacon-production-gcp.firebaseapp.com",
+      projectId: "arnacon-production-gcp",
+      storageBucket: "arnacon-production-gcp.appspot.com",
+      messagingSenderId: "343948402138",
+      appId: "1:343948402138:web:507c19ea2648df0ddbb4e3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function testConnection() {
+      try {
+        const q = query(collection(db, 'blogPosts'), orderBy('date', 'desc'));
+        const querySnapshot = await getDocs(q);
+        
+        const posts = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          title: doc.data().title || 'Untitled',
+          author: doc.data().author || 'Unknown',
+          date: doc.data().date?.toDate ? doc.data().date.toDate().toISOString() : 'No date'
+        }));
+
+        const solanaPost = posts.find(p => 
+          p.title.toLowerCase().includes('solana') && 
+          p.title.toLowerCase().includes('seeker')
+        );
+
+        let html = `
+          <h2>✓ Connection successful!</h2>
+          <p><strong>Total posts found:</strong> ${posts.length}</p>
+          <p><strong>"Solana Seeker" post found:</strong> ${solanaPost ? '✓ YES' : '✗ NO'}</p>
+          <h3>Posts (newest first):</h3>
+          <pre>${JSON.stringify(posts, null, 2)}</pre>
+        `;
+
+        document.getElementById('status').className = 'success';
+        document.getElementById('status').textContent = `✓ Successfully loaded ${posts.length} posts from Firestore`;
+        document.getElementById('results').innerHTML = html;
+
+      } catch (error) {
+        document.getElementById('status').className = 'error';
+        document.getElementById('status').textContent = '✗ Connection failed: ' + error.message;
+        document.getElementById('results').innerHTML = `<pre>${error.stack}</pre>`;
+      }
+    }
+
+    testConnection();
+  </script>
+</body>
+</html>
