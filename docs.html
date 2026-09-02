@@ -254,7 +254,7 @@ let result = await arnacon.executeNotification(prepared)
       </div>
 
       <p>Push tokens so a device can ring: iOS <code>sendNotiTokens(fcm, voip)</code>. Android <code>sendFcmToken</code>. Register the user’s own device. Do not push tokens for someone else.</p>
-      <p><code>installProduct</code> exists so a person can add an identity. Never auto-run it from FCM. The user Allows.</p>
+      <p><code>installProduct</code> adds an identity. Live Android still auto-installs from FCM ITEM with no dialog. The intended policy — implement this, and what MCP will require — is that the user Allows. Never auto-run it in new code.</p>
     </section>
     <section class="wrap docs-section doc-panel" id="java">
       <p class="kicker">Java / Android</p>
@@ -277,7 +277,7 @@ let result = await arnacon.executeNotification(prepared)
           <tr><td><code>sendCallNotification(local, remote, message)</code></td><td>Wrapper convenience: prepare CALL, then execute.</td></tr>
           <tr><td><code>sendFcmToken(token)</code></td><td>Register this device’s push token.</td></tr>
           <tr><td><code>fetchMessages</code> / <code>handleFcmMessage</code></td><td>Pull or accept inbound payloads. Do not install from them.</td></tr>
-          <tr><td><code>installProduct(item)</code></td><td>Add an identity. User Allows. Never auto-run from a push.</td></tr>
+          <tr><td><code>installProduct(item)</code></td><td>Add an identity. Live Android store auto-installs FCM ITEM today. Intended policy: user Allows.</td></tr>
           <tr><td><code>checkIdentity(label)</code></td><td>True if that label is already on this device.</td></tr>
         </tbody>
       </table>
@@ -308,7 +308,7 @@ let result = await arnacon.executeNotification(prepared)
           <tr><td><code>sendNotiTokens(_:_:)</code></td><td>Register this device’s FCM and VoIP tokens.</td></tr>
           <tr><td><code>supportedNotificationTypes(sender:)</code></td><td>Which types this identity can send.</td></tr>
           <tr><td><code>getProductsList()</code> / <code>getProductLabels()</code></td><td>Identities installed on this device.</td></tr>
-          <tr><td><code>installProduct(_:)</code></td><td>Add an identity. User Allows. Never auto-run from FCM.</td></tr>
+          <tr><td><code>installProduct(_:)</code></td><td>Add an identity. Intended policy: user Allows. Do not auto-run from FCM in new code.</td></tr>
           <tr><td><code>isEmailIdentity(_:)</code> / <code>writeEmail(_:)</code></td><td>Store-app email identity only. Not required to call.</td></tr>
         </tbody>
       </table>
