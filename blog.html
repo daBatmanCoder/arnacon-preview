@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog — Arnacon</title>
+  <link rel="icon" href="arnacon-logo.svg?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fff7f1;
+      --coral: #ff6b4a;
+      --coral-dark: #e5563d;
+      --ink: #2a1c18;
+      --ink-muted: rgba(42,28,24,.65);
+      --glass: rgba(255,255,255,.92);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+      width: min(1120px, calc(100% - 24px));
+      margin: 12px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      box-shadow: 0 4px 20px rgba(42,28,24,.08);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .nav-brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--coral);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 14px;
+      border: 0;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .btn:hover {
+      background: var(--coral-dark);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid rgba(42,28,24,.15);
+    }
+
+    .btn.ghost:hover {
+      border-color: rgba(42,28,24,.3);
+      background: rgba(42,28,24,.03);
+    }
+
+    /* Layout */
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      position: relative;
+    }
+
+    header {
+      padding: 80px 0 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .lede {
+      font-size: 1.15rem;
+      color: var(--ink-muted);
+      max-width: 42ch;
+      margin: 0 auto 32px;
+    }
+
+    /* Search & Filter */
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      border: 2px solid rgba(42,28,24,.12);
+      border-radius: 999px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--coral);
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255,107,74,.12);
+      border: 1.5px solid rgba(255,107,74,.2);
+      color: var(--coral-dark);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .tag:hover, .tag.active {
+      background: var(--coral);
+      border-color: var(--coral);
+      color: #fff;
+    }
+
+    /* Wallet */
+    .wallet-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding: 20px;
+      background: rgba(255,107,74,.08);
+      border-radius: 16px;
+    }
+
+    /* Posts Grid */
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .post-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(42,28,24,.06);
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(42,28,24,.12);
+    }
+
+    .post-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(135deg, rgba(255,107,74,.2), rgba(255,107,74,.05));
+    }
+
+    .post-content {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .post-excerpt {
+      color: var(--ink-muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--ink-muted);
+      padding-top: 16px;
+      border-top: 1px solid rgba(42,28,24,.08);
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .post-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,107,74,.12);
+      color: var(--coral-dark);
+    }
+
+    /* Post View */
+    .post-view {
+      display: none;
+      max-width: 720px;
+      margin: 0 auto 80px;
+    }
+
+    .post-view.active {
+      display: block;
+    }
+
+    .post-view .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--coral);
+      font-weight: 600;
+      margin-bottom: 32px;
+      cursor: pointer;
+    }
+
+    .post-view h1 {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .post-view .post-image {
+      width: 100%;
+      height: 400px;
+      border-radius: 16px;
+      margin: 28px 0;
+    }
+
+    .post-body {
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .post-body h2 {
+      font-size: 1.8rem;
+      margin: 36px 0 16px;
+    }
+
+    .post-body p {
+      margin-bottom: 20px;
+    }
+
+    .post-body a {
+      color: var(--coral);
+      text-decoration: underline;
+    }
+
+    .share {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 2px solid rgba(42,28,24,.08);
+      display: flex;
+      gap: 12px;
+    }
+
+    /* New Post Form */
+    .new-post {
+      display: none;
+      max-width: 720px;
+      margin: 0 auto 80px;
+    }
+
+    .new-post.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid rgba(42,28,24,.12);
+      border-radius: 12px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-group textarea {
+      min-height: 200px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--coral);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--ink-muted);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 2px solid rgba(42,28,24,.08);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .posts {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links a:not(.btn) {
+        display: none;
+      }
+
+      .wrap {
+        width: calc(100% - 32px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="arnacon-logo.svg?v=4" alt="Arnacon">
+      <span>Arnacon</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#privacy">Privacy</a>
+      <a href="demo.html">Demo</a>
+      <a href="index.html#download" class="btn">Download</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header>
+      <h1>Blog</h1>
+      <p class="lede">Updates, insights, and stories from the Arnacon team. Connect your wallet to publish.</p>
+    </header>
+
+    <!-- Wallet Connect -->
+    <div class="wallet-section" id="walletSection">
+      <appkit-button></appkit-button>
+      <button class="btn" id="newPostBtn" style="display: none;">Write Post</button>
+    </div>
+
+    <!-- List View -->
+    <div id="listView">
+      <div class="controls">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search posts...">
+        </div>
+        <div class="tags" id="filterTags"></div>
+      </div>
+
+      <div class="posts" id="postsGrid">
+        <div class="loading">Loading posts...</div>
+      </div>
+    </div>
+
+    <!-- Post View -->
+    <div class="post-view" id="postView">
+      <span class="back" id="backBtn">← Back to blog</span>
+      <div id="postContent"></div>
+    </div>
+
+    <!-- New Post Form -->
+    <div class="new-post" id="newPostForm">
+      <span class="back" id="cancelBtn">← Cancel</span>
+      <h2 style="margin-top: 20px; margin-bottom: 32px;">Write a new post</h2>
+      <form id="postForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="postTitle" required>
+        </div>
+        <div class="form-group">
+          <label>Excerpt (short summary)</label>
+          <input type="text" id="postExcerpt" required>
+        </div>
+        <div class="form-group">
+          <label>Content</label>
+          <textarea id="postBody" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Tags (comma separated)</label>
+          <input type="text" id="postTags" placeholder="identity, privacy, updates">
+        </div>
+        <div class="form-group">
+          <label>Image URL (IPFS or https)</label>
+          <input type="url" id="postImage" placeholder="https://...">
+        </div>
+        <button type="submit" class="btn">Publish Post</button>
+      </form>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <span style="color: var(--ink-muted);">© 2026 Arnacon</span>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="https://www.arnacon.com/tandc">Terms</a>
+          <a href="demo.html">Demo</a>
+          <a href="mailto:support@arnacon.com">support@arnacon.com</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    // Firebase config (same as existing)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXxvq3qX-H9Yt6vq5Zd0zYqZ7X4xQ9qZc",
+      authDomain: "arnacon-blog.firebaseapp.com",
+      projectId: "arnacon-production-gcp",
+      storageBucket: "arnacon-production-gcp.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef123456"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let allPosts = [];
+    let currentWalletAddress = null;
+
+    // Load posts
+    async function loadPosts() {
+      try {
+        const q = query(collection(db, 'blogPosts'), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
+        allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderPosts(allPosts);
+        renderFilterTags();
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('postsGrid').innerHTML = '<div class="loading">Error loading posts. Please try again.</div>';
+      }
+    }
+
+    // Render posts
+    function renderPosts(posts) {
+      const grid = document.getElementById('postsGrid');
+      if (posts.length === 0) {
+        grid.innerHTML = '<div class="loading">No posts yet. Be the first to write!</div>';
+        return;
+      }
+
+      grid.innerHTML = posts.map(post => `
+        <div class="post-card" onclick="viewPost('${post.id}')">
+          ${post.imageUrl ? `<img class="post-image" src="${post.imageUrl}" alt="${post.title}">` : '<div class="post-image"></div>'}
+          <div class="post-content">
+            <h3 class="post-title">${escapeHtml(post.title)}</h3>
+            <p class="post-excerpt">${escapeHtml(post.excerpt || '')}</p>
+            <div class="post-meta">
+              <span>${formatDate(post.createdAt)}</span>
+              <span>${post.author?.slice(0, 6)}...${post.author?.slice(-4)}</span>
+            </div>
+            ${post.tags && post.tags.length > 0 ? `
+              <div class="post-tags">
+                ${post.tags.map(tag => `<span class="post-tag">${escapeHtml(tag)}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // View post
+    window.viewPost = function(postId) {
+      const post = allPosts.find(p => p.id === postId);
+      if (!post) return;
+
+      document.getElementById('listView').style.display = 'none';
+      document.getElementById('postView').classList.add('active');
+      
+      document.getElementById('postContent').innerHTML = `
+        <h1>${escapeHtml(post.title)}</h1>
+        <div class="post-meta" style="margin-bottom: 24px;">
+          <span>${formatDate(post.createdAt)}</span>
+          <span>${post.author?.slice(0, 6)}...${post.author?.slice(-4)}</span>
+        </div>
+        ${post.imageUrl ? `<img class="post-image" src="${post.imageUrl}" alt="${post.title}">` : ''}
+        <div class="post-body">${escapeHtml(post.body).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>')}</div>
+        ${post.tags && post.tags.length > 0 ? `
+          <div class="post-tags" style="margin-top: 28px;">
+            ${post.tags.map(tag => `<span class="post-tag">${escapeHtml(tag)}</span>`).join('')}
+          </div>
+        ` : ''}
+        <div class="share">
+          <button class="btn ghost" onclick="sharePost()">Share</button>
+        </div>
+      `;
+
+      window.scrollTo(0, 0);
+    };
+
+    // Back button
+    document.getElementById('backBtn').addEventListener('click', () => {
+      document.getElementById('postView').classList.remove('active');
+      document.getElementById('listView').style.display = 'block';
+    });
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const filtered = allPosts.filter(post => 
+        post.title.toLowerCase().includes(term) ||
+        (post.excerpt && post.excerpt.toLowerCase().includes(term)) ||
+        (post.body && post.body.toLowerCase().includes(term))
+      );
+      renderPosts(filtered);
+    });
+
+    // Filter tags
+    function renderFilterTags() {
+      const tags = new Set();
+      allPosts.forEach(post => {
+        if (post.tags) post.tags.forEach(tag => tags.add(tag));
+      });
+      
+      const container = document.getElementById('filterTags');
+      container.innerHTML = Array.from(tags).map(tag => 
+        `<span class="tag" onclick="filterByTag('${tag}')">${escapeHtml(tag)}</span>`
+      ).join('');
+    }
+
+    window.filterByTag = function(tag) {
+      const filtered = allPosts.filter(post => post.tags && post.tags.includes(tag));
+      renderPosts(filtered);
+    };
+
+    // New post form
+    document.getElementById('newPostBtn').addEventListener('click', () => {
+      document.getElementById('listView').style.display = 'none';
+      document.getElementById('newPostForm').classList.add('active');
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      document.getElementById('newPostForm').classList.remove('active');
+      document.getElementById('listView').style.display = 'block';
+      document.getElementById('postForm').reset();
+    });
+
+    document.getElementById('postForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!currentWalletAddress) {
+        alert('Please connect your wallet first');
+        return;
+      }
+
+      const title = document.getElementById('postTitle').value;
+      const excerpt = document.getElementById('postExcerpt').value;
+      const body = document.getElementById('postBody').value;
+      const tags = document.getElementById('postTags').value.split(',').map(t => t.trim()).filter(Boolean);
+      const imageUrl = document.getElementById('postImage').value;
+
+      try {
+        await addDoc(collection(db, 'blogPosts'), {
+          title,
+          excerpt,
+          body,
+          tags,
+          imageUrl: imageUrl || null,
+          author: currentWalletAddress,
+          createdAt: serverTimestamp()
+        });
+
+        alert('Post published successfully!');
+        document.getElementById('postForm').reset();
+        document.getElementById('newPostForm').classList.remove('active');
+        document.getElementById('listView').style.display = 'block';
+        await loadPosts();
+      } catch (error) {
+        console.error('Error publishing post:', error);
+        alert('Error publishing post. Please try again.');
+      }
+    });
+
+    // Share
+    window.sharePost = function() {
+      if (navigator.share) {
+        navigator.share({
+          title: document.querySelector('#postContent h1').textContent,
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      }
+    };
+
+    // Utils
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return 'Recently';
+      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Load posts on init
+    loadPosts();
+  </script>
+
+  <!-- Reown AppKit -->
+  <script type="module">
+    import { createAppKit } from 'https://cdn.jsdelivr.net/npm/@reown/appkit@1.0.0/+esm';
+    import { EthersAdapter } from 'https://cdn.jsdelivr.net/npm/@reown/appkit-adapter-ethers@1.0.0/+esm';
+    import { mainnet, polygon } from 'https://cdn.jsdelivr.net/npm/@reown/appkit@1.0.0/networks/+esm';
+
+    const projectId = '2217f1bdaf9856078d15617a25f6bb93';
+
+    const appKit = createAppKit({
+      adapters: [new EthersAdapter()],
+      networks: [mainnet, polygon],
+      projectId,
+      features: {
+        analytics: false
+      }
+    });
+
+    // Watch for wallet connection
+    appKit.subscribeAccount((account) => {
+      if (account.address) {
+        currentWalletAddress = account.address;
+        document.getElementById('newPostBtn').style.display = 'inline-flex';
+      } else {
+        currentWalletAddress = null;
+        document.getElementById('newPostBtn').style.display = 'none';
+      }
+    });
+  </script>
+
+  <script>
+    // Analytics (only on arnacon.com)
+    (function() {
+      var h = (location.hostname || '').replace(/^www\./, '');
+      if (h !== 'arnacon.com') return;
+      
+      fetch('https://europe-west1-arnacon-production-gcp.cloudfunctions.net/website-analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          path: location.pathname + location.search,
+          ref: document.referrer || '',
+          t: Date.now()
+        })
+      }).catch(function() {});
+    })();
+  </script>
+</body>
+</html>

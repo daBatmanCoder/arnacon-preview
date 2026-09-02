@@ -5,26 +5,45 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Privacy — Arnacon</title>
 <link rel="icon" href="arnacon-logo.svg?v=4">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Archivo,system-ui,sans-serif;background:#0c0c0e;color:#ececec;line-height:1.55}
-a{color:#9db7ff}nav,main,footer{width:min(720px,calc(100% - 40px));margin:0 auto}
-nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
-nav img{width:28px;height:28px;border-radius:8px;margin-right:8px;vertical-align:middle}
-h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.03em;line-height:1.05;font-weight:500;margin:12px 0 8px}
-.k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9db7ff;font-weight:600}
-.lede{font-size:1.15rem;color:#ecececbb;margin:0 0 36px}
-h2{font-size:1.25rem;margin:32px 0 8px;letter-spacing:-.02em}
-p,li{color:#ecececcc}ul{padding-left:1.2em}li{margin:6px 0}
-.box{border:1px solid #ffffff18;border-radius:16px;padding:20px 22px;background:#141416;margin:24px 0}
-.box strong{color:#fff}
-footer{padding:40px 0 64px;color:#ececec77;font-size:13px;display:flex;gap:16px;flex-wrap:wrap;border-top:1px solid #ffffff14;margin-top:48px}
+:root{--cream:#fff7f1;--coral:#ff6b4a;--ink:#2a1c18;--ink-muted:rgba(42,28,24,.65);--glass:rgba(255,255,255,.92)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{margin:0;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+a{color:var(--coral);text-decoration:none}a:hover{text-decoration:underline}
+nav{position:sticky;top:12px;z-index:100;width:min(1120px,calc(100% - 24px));margin:12px auto 0;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--glass);backdrop-filter:blur(16px);border-radius:999px;box-shadow:0 4px 20px rgba(42,28,24,.08)}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--ink)}.nav-brand:hover{text-decoration:none}
+.nav-brand img{width:32px;height:32px;border-radius:10px}
+.nav-links{display:flex;align-items:center;gap:18px}.nav-links a{font-size:14px;font-weight:600;color:var(--ink-muted);transition:color .2s}.nav-links a:hover{color:var(--ink);text-decoration:none}
+main{width:min(760px,calc(100% - 40px));margin:0 auto;padding:80px 0 60px}
+h1{font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:-.04em;line-height:1.05;font-weight:700;margin:12px 0 16px}
+.k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-weight:600;margin-bottom:12px;display:block}
+.lede{font-size:1.1rem;color:var(--ink-muted);margin:0 0 40px;line-height:1.6}
+h2{font-size:1.5rem;margin:40px 0 12px;letter-spacing:-.02em;font-weight:700}
+p{color:var(--ink);margin-bottom:16px}li{color:var(--ink);margin:8px 0}
+ul{padding-left:1.4em;margin-bottom:20px}
+.box{border:2px solid rgba(255,107,74,.2);border-radius:20px;padding:28px 32px;background:rgba(255,107,74,.06);margin:32px 0}.box strong{color:var(--ink);font-weight:700}.box p:last-child{margin-bottom:0}
+footer{padding:40px 0;border-top:2px solid rgba(42,28,24,.08);margin-top:60px}
+.footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;width:min(1120px,calc(100% - 40px));margin:0 auto}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}.footer-links a{font-size:14px;color:var(--ink-muted)}.footer-links a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:900px){.nav-links a:not(:last-child){display:none}main{width:calc(100% - 32px)}}
 </style>
 </head>
 <body>
-<nav><a href="index.html" style="color:#ececec;text-decoration:none;font-weight:600"><img src="arnacon-logo.svg?v=4" alt="">Arnacon</a><a href="index.html">Home</a></nav>
+<nav>
+  <a href="index.html" class="nav-brand">
+    <img src="arnacon-logo.svg?v=4" alt="Arnacon">
+    <span>Arnacon</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+  </div>
+</nav>
 <main>
-<p class="k">Privacy</p>
+<span class="k">Privacy</span>
 <h1>On the site. In English. No hunt.</h1>
 <p class="lede">This page is the privacy policy for Arnacon. It lives here, not on a sister brand. If a journalist cannot find it, that is our failure. Effective 2 September 2026.</p>
 <div class="box">
@@ -47,7 +66,7 @@ footer{padding:40px 0 64px;color:#ececec77;font-size:13px;display:flex;gap:16px;
 <p>The older notice on cellact.nl said we collect no personal data at all. That sentence is too wide for 2026, so this page replaces it for Arnacon. Identifiers can exist (an email you verify, a push token so a phone can ring, a from/to trace without the body). Third parties you choose can collect more. We would rather say that here than let someone else discover it.</p>
 <h2>WhatsApp, named</h2>
 <p>The Digital Markets Act lets people in the EU message across apps. Arnacon supports that for opted-in WhatsApp users.</p>
-<p>Meta’s terms for that framework include that Meta may store metadata of users of the external service. Signal and Telegram refused those terms. We did not hide the door. We also will not hide the cost of opening it.</p>
+<p>Meta's terms for that framework include that Meta may store metadata of users of the external service. Signal and Telegram refused those terms. We did not hide the door. We also will not hide the cost of opening it.</p>
 <ul>
 <li>You opt in. The WhatsApp user opts in. Nobody is silently bridged.</li>
 <li>A message you send to WhatsApp is on WhatsApp. Their terms apply. That can include metadata they store.</li>
@@ -73,11 +92,17 @@ footer{padding:40px 0 64px;color:#ececec77;font-size:13px;display:flex;gap:16px;
 <p>If the product changes how data is handled, we change this page and the date at the top. No silent policy.</p>
 </main>
 <footer>
-<a href="index.html">Home</a>
-<a href="privacy.html">Privacy</a>
-<a href="https://www.arnacon.com/tandc">Terms</a>
-<a href="demo.html">Demo</a>
-<a href="versions.html">Versions</a>
+  <div class="footer-content">
+    <span style="color:var(--ink-muted)">© 2026 Arnacon</span>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://www.arnacon.com/tandc">Terms</a>
+      <a href="demo.html">Demo</a>
+      <a href="versions.html">Versions</a>
+      <a href="mailto:support@arnacon.com">support@arnacon.com</a>
+    </div>
+  </div>
 </footer>
 <script>
 (function(){var h=(location.hostname||'').replace(/^www\./,'');if(h!=='arnacon.com')return;fetch('https://europe-west1-arnacon-production-gcp.cloudfunctions.net/website-analytics',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:location.pathname,ref:document.referrer||'',t:Date.now()})}).catch(function(){})})();
