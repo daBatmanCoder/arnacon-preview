@@ -1,0 +1,124 @@
+{
+  "name": "Arnacon",
+  "version": "preview",
+  "description": "Proposed MCP tools for an already-created Arnacon identity. Talk as an email or a new identity — a phone number is not required. This file is a spec on the GitHub Pages preview. A live mcp.arnacon.com server is not up yet.",
+  "homepage": "https://dabatmancoder.github.io/arnacon-preview/docs.html",
+  "status": "spec",
+  "liveServer": false,
+  "auth": {
+    "requirement": "The connected user must already hold an Arnacon identity in the native app. Never expose a mnemonic or private key. Payments and store checkout stay human. installProduct requires an explicit Allow from the user. WhatsApp is out of scope."
+  },
+  "never": [
+    "mnemonic",
+    "private keys",
+    "payments or store checkout",
+    "installProduct without an explicit user Allow",
+    "setRsaKey",
+    "setNotiTokens",
+    "send as another identity",
+    "WhatsApp opt-in"
+  ],
+  "tools": [
+    {
+      "name": "resolveIdentity",
+      "description": "Resolve an Arnacon identity name (for example alice.arnacon.global) to its owner. Read-only.",
+      "mapsTo": "getENSOwner",
+      "confirmation": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "identity": {
+            "type": "string",
+            "description": "Identity to resolve, such as alice.arnacon.global or you@mail.com"
+          }
+        },
+        "required": ["identity"]
+      }
+    },
+    {
+      "name": "listIdentities",
+      "description": "List identities installed for the signed-in user. Read-only.",
+      "mapsTo": "getProductsList / getProductLabels / getIdentities",
+      "confirmation": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "getProviderInfo",
+      "description": "Read-only provider metadata for the current identity. Never returns keys.",
+      "mapsTo": "supported notification routing metadata",
+      "confirmation": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "identity": {
+            "type": "string",
+            "description": "Optional identity to inspect"
+          }
+        }
+      }
+    },
+    {
+      "name": "supportedNotificationTypes",
+      "description": "Read-only list of notification types this identity can send (call and/or message).",
+      "mapsTo": "supportedNotificationTypes(sender:)",
+      "confirmation": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fromIdentity": {
+            "type": "string",
+            "description": "Sender identity, such as alice.arnacon.global"
+          }
+        },
+        "required": ["fromIdentity"]
+      }
+    },
+    {
+      "name": "sendMessage",
+      "description": "Send a message from an identity the user already owns to another identity or email. Maps to prepareNotification(.message) then executeNotification. Requires confirmation. Never send as someone else.",
+      "mapsTo": "prepareNotification(sender, target, message, MESSAGE) + executeNotification",
+      "confirmation": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Sender identity the user already owns"
+          },
+          "to": {
+            "type": "string",
+            "description": "Recipient identity or email — a phone number is not required"
+          },
+          "body": {
+            "type": "string",
+            "description": "Message text"
+          }
+        },
+        "required": ["from", "to", "body"]
+      }
+    },
+    {
+      "name": "startCall",
+      "description": "Start a call from an identity the user already owns to another identity or email. Maps to sendCallNotification / prepareNotification(.call). Requires confirmation. A phone number is not required.",
+      "mapsTo": "sendCallNotification / prepareNotification(CALL)",
+      "confirmation": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fromIdentity": {
+            "type": "string",
+            "description": "Caller identity the user already owns"
+          },
+          "toIdentity": {
+            "type": "string",
+            "description": "Callee identity or email — a phone number is not required"
+          }
+        },
+        "required": ["fromIdentity", "toIdentity"]
+      }
+    }
+  ]
+}

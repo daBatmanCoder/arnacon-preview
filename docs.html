@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Developers — Arnacon</title>
+  <link rel="icon" href="arnacon-logo.svg?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dawn.css?v=10">
+  <style>
+    .nav-links a.current { color: var(--ink); }
+    .docs-hero { padding: 72px 0 28px; }
+    .docs-hero .lede { max-width: 52ch; }
+    .docs-note {
+      margin: 24px 0 0; padding: 16px 18px;
+      border: 2px solid rgba(255,107,74,.2);
+      background: rgba(255,107,74,.06);
+      border-radius: 16px; font-size: 14px;
+      color: var(--ink-muted); max-width: 68ch;
+    }
+    .docs-note strong { color: var(--ink); }
+    .doc-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin: 0 auto 8px; width: min(1120px, calc(100% - 40px));
+      position: sticky; top: 76px; z-index: 40;
+      padding: 10px 0 14px;
+      background: linear-gradient(180deg, var(--cream) 70%, rgba(255,247,241,0));
+    }
+    .doc-tab {
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1.5px solid rgba(42,28,24,.12);
+      background: #fff; color: var(--ink-muted); cursor: pointer;
+    }
+    .doc-tab:hover { color: var(--ink); border-color: rgba(42,28,24,.28); }
+    .doc-tab.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .doc-panel { display: none; }
+    .doc-panel.active { display: block; }
+    .docs-section { padding: 36px 0 20px; }
+    .docs-section h2 { margin-bottom: 12px; }
+    .docs-section p { color: var(--ink-muted); max-width: 64ch; margin-bottom: 14px; line-height: 1.6; }
+    .docs-section p a { color: var(--coral); font-weight: 600; }
+    .steps { margin: 22px 0 8px; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 28px; }
+    .code-card { background: #fff; border: 2px solid rgba(42,28,24,.08); border-radius: 18px; overflow: hidden; }
+    .code-card header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 16px; border-bottom: 1px solid rgba(42,28,24,.08);
+      font-size: 12px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--coral);
+    }
+    pre {
+      margin: 0; padding: 16px 18px 18px; overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.5px; line-height: 1.55; color: var(--ink); background: #fff;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
+    .ref { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 14px; }
+    .ref th {
+      text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--coral); padding: 8px 10px 10px 0; border-bottom: 2px solid rgba(42,28,24,.1);
+    }
+    .ref td { padding: 10px 12px 10px 0; border-bottom: 1px solid rgba(42,28,24,.08); vertical-align: top; }
+    .ref td:first-child { white-space: nowrap; font-weight: 700; color: var(--ink); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+    .repos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+    .repo-card {
+      display: block; background: #fff; border: 2px solid rgba(42,28,24,.08);
+      border-radius: 18px; padding: 20px 22px;
+    }
+    .repo-card:hover { border-color: var(--coral); }
+    .repo-card h3 { margin-bottom: 6px; }
+    .repo-card p { margin: 0; font-size: 14px; }
+    .warn {
+      margin: 18px 0; padding: 16px 18px; border-left: 4px solid var(--coral);
+      background: rgba(255,107,74,.06); border-radius: 0 14px 14px 0;
+      color: var(--ink-muted); font-size: 14px;
+    }
+    .warn strong { color: var(--ink); }
+    .never-list { margin: 8px 0 0; padding-left: 1.2em; color: var(--ink-muted); }
+    .never-list li { margin: 6px 0; }
+    @media (max-width: 900px) {
+      .pair, .repos { grid-template-columns: 1fr; }
+      .doc-tabs { width: calc(100% - 32px); top: 68px; }
+      .ref td:first-child { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="arnacon-logo.svg?v=4" alt="Arnacon">
+      <span>Arnacon</span>
+    </a>
+    <div class="nav-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="blog.html">Blog</a>
+      <a href="docs.html" class="current">Docs</a>
+      <a href="demo.html">Demo</a>
+      <a href="index.html#download" class="btn">Download</a>
+    </div>
+  </nav>
+
+  <header class="wrap docs-hero" id="top">
+    <p class="kicker">Developers</p>
+    <h1>Get started.</h1>
+    <p class="lede">Talk as an email you already own, or as a new identity. No phone number required. You bring the brand. Arnacon only enables.</p>
+    <div class="chip-row">
+      <span class="chip">Swift · iArnacon</span>
+      <span class="chip">Android · JAR 0.4.15</span>
+      <span class="chip">No number required</span>
+    </div>
+    <p class="docs-note"><strong>This page is the store SDK.</strong> It tracks the live Arnacon apps and will update. A separate shell is not the Arnacon product — do not treat it as this SDK.</p>
+  </header>
+
+  <div class="doc-tabs" role="tablist">
+    <button class="doc-tab active" data-panel="got" type="button">Get started</button>
+    <button class="doc-tab" data-panel="java" type="button">Java</button>
+    <button class="doc-tab" data-panel="swift" type="button">Swift</button>
+    <button class="doc-tab" data-panel="js" type="button">JavaScript</button>
+    <button class="doc-tab" data-panel="mcp" type="button">For AI (MCP)</button>
+  </div>
+
+  <main>
+    <section class="wrap docs-section doc-panel active" id="got">
+      <p class="kicker">Five steps</p>
+      <h2>Install. Init. Identity. Message. Call.</h2>
+      <p>The same path on both platforms. Recipients look like <code>alice.arnacon.global</code> and <code>bob.arnacon.global</code>. A phone number is not the gate.</p>
+
+      <div class="steps">
+        <span class="step"><b>1</b> Install</span>
+        <span class="step"><b>2</b> Init</span>
+        <span class="step"><b>3</b> Identity</span>
+        <span class="step"><b>4</b> First message</span>
+        <span class="step"><b>5</b> First call</span>
+      </div>
+
+      <h3>1. Install</h3>
+      <p>Android vendors the JAR. iOS adds the Swift package. There is no public Maven artifact and no CocoaPods pod for this surface.</p>
+      <div class="pair">
+        <article class="code-card">
+          <header><span>Android</span><span>JAR 0.4.15</span></header>
+          <pre>libs/Arnacon-0.4.15.jar
+
+Source of truth:
+github.com/cellact/Arnacon_Android_Client_OpenSource
+
+Wrapper:
+com.arnacon.app.arnacon.ArnaconWeb3</pre>
+        </article>
+        <article class="code-card">
+          <header><span>iOS</span><span>SPM · iArnacon</span></header>
+          <pre>In Xcode: File → Add Package Dependencies…
+Add the iArnacon package used by
+github.com/cellact/arnacon-swift
+
+Product name: iArnacon
+Platform: iOS 13+
+No CocoaPods. Do not invent a version pin
+that is not on the package.</pre>
+        </article>
+      </div>
+      <h3>2. Init</h3>
+      <p>Create the SDK, then set network settings. You supply a data-save helper. The second iOS argument is the app’s stored coordinates handle — wiring, not a phone number. No API key.</p>
+      <div class="pair">
+        <article class="code-card">
+          <header><span>Android</span><span>ArnaconWeb3</span></header>
+          <pre>ArnaconWeb3 sdk = ArnaconWeb3.getInstance(context);
+sdk.setNetworkSettings();</pre>
+        </article>
+        <article class="code-card">
+          <header><span>Swift</span><span>Arnacon : AArnacon</span></header>
+          <pre>import iArnacon
+
+let arnacon = Arnacon(
+    dataSaveHelper: dataSaver,
+    gpsCoordinates: storedHandle
+)
+await arnacon.setNetworkSettings(server, appVersion)</pre>
+        </article>
+      </div>
+
+      <h3>3. Identity — email or new</h3>
+      <p>People talk as an email they verify, or as a new identity they create. Store apps mint <code>{label}.arnacon.global</code> via ITEM. Call and message those names. Wallet signing and SIP headers sit under this — they are not the product.</p>
+      <div class="pair">
+        <article class="code-card">
+          <header><span>Android</span></header>
+          <pre>String me = sdk.getPublicKey(); // main coordinates
+String xdata = sdk.getXData();
+String xsign = sdk.getXSign(xdata);
+String signed = sdk.signMessage(message);</pre>
+        </article>
+        <article class="code-card">
+          <header><span>Swift</span></header>
+          <pre>let me = arnacon.getMainCoordinates()
+let owner = try await arnacon.getENSOwner(
+    memberName: "alice.arnacon.global"
+)
+let xdata = arnacon.getXData(identity: "alice.arnacon.global")
+let xsign = try arnacon.getXSign(xdata)
+let signed = try arnacon.signMessage(message)</pre>
+        </article>
+      </div>
+
+      <h3>4. First message</h3>
+      <p>Prepare, then execute. <code>NotificationType.MESSAGE = 1</code>. Do not use a plaintext helper as the entry. The Android store wrapper’s <code>sendFCMMessage</code> is the same path (prepare + execute) if you already have the wrapper.</p>
+      <div class="pair">
+        <article class="code-card">
+          <header><span>Android · JAR</span></header>
+          <pre>PreparedNotification prepared = web3Service.prepareNotification(
+    "alice.arnacon.global",
+    "bob.arnacon.global",
+    "Hello from Alice",
+    DefaultParameters.NotificationType.MESSAGE,
+    true
+);
+NotificationResult result = web3Service.executeNotification(prepared);</pre>
+        </article>
+        <article class="code-card">
+          <header><span>Swift</span></header>
+          <pre>let prepared = await arnacon.prepareNotification(
+    sender: "alice.arnacon.global",
+    target: "bob.arnacon.global",
+    message: "Hello from Alice",
+    notificationType: .message
+)
+let result = await arnacon.executeNotification(prepared)
+// or sendNotification(...) in one step</pre>
+        </article>
+      </div>
+
+      <h3>5. First call</h3>
+      <p>Ring the other identity. <code>NotificationType.CALL = 0</code>. The SDK prepares identity and the call notification. CallKit lives in the store app, not in the Swift SDK. Your app’s call stack takes it from there.</p>
+      <div class="pair">
+        <article class="code-card">
+          <header><span>Android</span></header>
+          <pre>sdk.sendCallNotification(
+    "alice.arnacon.global",
+    "bob.arnacon.global",
+    "Incoming call"
+);
+// same path: prepareNotification(..., CALL, ...)</pre>
+        </article>
+        <article class="code-card">
+          <header><span>Swift</span></header>
+          <pre>let ringing = try await arnacon.sendCallNotification(
+    sender: "alice.arnacon.global",
+    target: "bob.arnacon.global"
+)
+// or prepareNotification(..., notificationType: .call)</pre>
+        </article>
+      </div>
+
+      <p>Push tokens so a device can ring: iOS <code>sendNotiTokens(fcm, voip)</code>. Android <code>sendFcmToken</code>. Register the user’s own device. Do not push tokens for someone else.</p>
+      <p><code>installProduct</code> exists so a person can add an identity. Never auto-run it from FCM. The user Allows.</p>
+    </section>
+    <section class="wrap docs-section doc-panel" id="java">
+      <p class="kicker">Java / Android</p>
+      <h2>Vendored JAR. Store wrapper.</h2>
+      <p>Not Maven. Ship <code>Arnacon-0.4.15</code> with the app. The live open wrapper is <code>com.arnacon.app.arnacon.ArnaconWeb3</code> in <a href="https://github.com/cellact/Arnacon_Android_Client_OpenSource">cellact/Arnacon_Android_Client_OpenSource</a>. The JAR type behind it is <code>org.Arnacon</code>.</p>
+
+      <table class="ref">
+        <thead>
+          <tr><th>Method</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>getInstance(ctx)</code></td><td>Singleton wrapper for the vendored JAR.</td></tr>
+          <tr><td><code>setNetworkSettings()</code></td><td>Connect the running server config. Call after init.</td></tr>
+          <tr><td><code>getPublicKey()</code></td><td>Main coordinates for this install (not a phone number).</td></tr>
+          <tr><td><code>getXData()</code> / <code>getXSign(data)</code></td><td>Identity headers used when the app registers to call.</td></tr>
+          <tr><td><code>signMessage(message)</code></td><td>Sign a payload with the install’s key. Never log the key.</td></tr>
+          <tr><td><code>prepareNotification(...)</code></td><td>JAR: build a MESSAGE (1) or CALL (0) plan without sending.</td></tr>
+          <tr><td><code>executeNotification(prepared)</code></td><td>JAR: send a prepared plan.</td></tr>
+          <tr><td><code>sendFCMMessage(local, remote, message)</code></td><td>Wrapper convenience: prepare MESSAGE, then execute.</td></tr>
+          <tr><td><code>sendCallNotification(local, remote, message)</code></td><td>Wrapper convenience: prepare CALL, then execute.</td></tr>
+          <tr><td><code>sendFcmToken(token)</code></td><td>Register this device’s push token.</td></tr>
+          <tr><td><code>fetchMessages</code> / <code>handleFcmMessage</code></td><td>Pull or accept inbound payloads. Do not install from them.</td></tr>
+          <tr><td><code>installProduct(item)</code></td><td>Add an identity. User Allows. Never auto-run from a push.</td></tr>
+          <tr><td><code>checkIdentity(label)</code></td><td>True if that label is already on this device.</td></tr>
+        </tbody>
+      </table>
+      <p>Identities after ITEM are <code>{label}.arnacon.global</code>, not a raw <code>0x</code> address. Email as a talk-as identity is a store-app path. WhatsApp is not required.</p>
+    </section>
+
+    <section class="wrap docs-section doc-panel" id="swift">
+      <p class="kicker">Swift / iOS</p>
+      <h2>SPM product iArnacon.</h2>
+      <p>Used by the store app at <a href="https://github.com/cellact/arnacon-swift">cellact/arnacon-swift</a>. Add the package by repository URL in Xcode. Product name <code>iArnacon</code>. iOS 13+. No CocoaPods. Class <code>Arnacon : AArnacon</code>. CallKit is the store app, not this SDK.</p>
+
+      <table class="ref">
+        <thead>
+          <tr><th>Method</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>init(dataSaveHelper:gpsCoordinates:)</code></td><td>Create the SDK with your data-save helper.</td></tr>
+          <tr><td><code>setNetworkSettings(_:_:_:)</code></td><td>Connect the running server config. Call after init.</td></tr>
+          <tr><td><code>getMainCoordinates()</code></td><td>Main coordinates for this install.</td></tr>
+          <tr><td><code>getENSOwner(memberName:forceFresh:)</code></td><td>Resolve an identity name to its owner.</td></tr>
+          <tr><td><code>getXData(identity:)</code> / <code>getXSign(_:)</code></td><td>Identity headers used when the app registers to call.</td></tr>
+          <tr><td><code>signMessage(_:)</code></td><td>Sign a payload. Never expose the mnemonic or key.</td></tr>
+          <tr><td><code>prepareNotification(sender:target:message:notificationType:)</code></td><td>Build a MESSAGE or CALL plan.</td></tr>
+          <tr><td><code>executeNotification(_:)</code></td><td>Send a prepared plan.</td></tr>
+          <tr><td><code>sendNotification(...)</code></td><td>Prepare and execute in one step.</td></tr>
+          <tr><td><code>sendCallNotification(sender:target:)</code></td><td>Preferred one-shot for a call.</td></tr>
+          <tr><td><code>sendFCMMessage(sender:target:)</code></td><td>One-shot message notification when you already have the plan path.</td></tr>
+          <tr><td><code>sendNotiTokens(_:_:)</code></td><td>Register this device’s FCM and VoIP tokens.</td></tr>
+          <tr><td><code>supportedNotificationTypes(sender:)</code></td><td>Which types this identity can send.</td></tr>
+          <tr><td><code>getProductsList()</code> / <code>getProductLabels()</code></td><td>Identities installed on this device.</td></tr>
+          <tr><td><code>installProduct(_:)</code></td><td>Add an identity. User Allows. Never auto-run from FCM.</td></tr>
+          <tr><td><code>isEmailIdentity(_:)</code> / <code>writeEmail(_:)</code></td><td>Store-app email identity only. Not required to call.</td></tr>
+        </tbody>
+      </table>
+      <p>Notification types: <code>CALL = 0</code>, <code>MESSAGE = 1</code>. Recipients: <code>alice.arnacon.global</code>, <code>bob.arnacon.global</code>, or an email. A phone number is not required.</p>
+    </section>
+    <section class="wrap docs-section doc-panel" id="js">
+      <p class="kicker">JavaScript</p>
+      <h2>No public calling SDK.</h2>
+      <p>Open the native Arnacon app, or pair a browser through the ArnaconWeb companion.</p>
+      <p>Native-bridge pairing only. There is no first-call JavaScript snippet on this page.</p>
+      <p>When a public JS calling surface exists, this section will show it. Until then, use Swift or Android.</p>
+    </section>
+    <section class="wrap docs-section doc-panel" id="mcp">
+      <p class="kicker">For AI</p>
+      <h2>Proposed MCP. Not a live server.</h2>
+      <p>This is a spec on the preview. A live MCP host is not up yet. The machine-readable file is <a href="mcp.json">mcp.json</a>. Auth: the user must already have an Arnacon identity. Never expose a mnemonic or private key. Payments stay human.</p>
+      <p>Writes (message, call) need an explicit confirm. Read-only tools do not.</p>
+      <table class="ref">
+        <thead>
+          <tr><th>Tool</th><th>Maps to</th><th>Confirm</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>resolveIdentity</code></td><td><code>getENSOwner</code></td><td>No</td></tr>
+          <tr><td><code>listIdentities</code></td><td>product / identity list</td><td>No</td></tr>
+          <tr><td><code>getProviderInfo</code></td><td>read-only provider metadata</td><td>No</td></tr>
+          <tr><td><code>supportedNotificationTypes</code></td><td><code>supportedNotificationTypes</code></td><td>No</td></tr>
+          <tr><td><code>sendMessage</code></td><td><code>prepareNotification(.message)</code> then <code>executeNotification</code></td><td>Yes</td></tr>
+          <tr><td><code>startCall</code></td><td><code>sendCallNotification</code> / <code>prepareNotification(.call)</code></td><td>Yes</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">
+        <strong>Never, over MCP:</strong>
+        <ul class="never-list">
+          <li>Mnemonic or private keys</li>
+          <li>Payments or store checkout</li>
+          <li><code>installProduct</code> without an explicit user Allow</li>
+          <li><code>setRsaKey</code> or <code>setNotiTokens</code></li>
+          <li>Send as another identity</li>
+          <li>WhatsApp opt-in</li>
+        </ul>
+      </div>
+    </section>
+    <section class="wrap docs-section">
+      <p class="kicker">Source of truth</p>
+      <h2>Repos this page tracks.</h2>
+      <div class="repos">
+        <a class="repo-card" href="https://github.com/cellact/arnacon-swift">
+          <h3>iOS · iArnacon</h3>
+          <p>cellact/arnacon-swift — SPM product iArnacon. Store app SDK.</p>
+        </a>
+        <a class="repo-card" href="https://github.com/cellact/Arnacon_Android_Client_OpenSource">
+          <h3>Android · JAR 0.4.15</h3>
+          <p>cellact/Arnacon_Android_Client_OpenSource — wrapper ArnaconWeb3.</p>
+        </a>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap">
+    <div class="footer-content">
+      <span style="color: var(--ink-muted);">© 2026 Arnacon</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="blog.html">Blog</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://www.arnacon.com/tandc">Terms</a>
+        <a href="demo.html">Demo</a>
+        <a href="mailto:support@arnacon.com">support@arnacon.com</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.querySelectorAll(".doc-tab").forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var id = tab.getAttribute("data-panel");
+        document.querySelectorAll(".doc-tab").forEach(function (t) { t.classList.remove("active"); });
+        document.querySelectorAll(".doc-panel").forEach(function (p) { p.classList.remove("active"); });
+        tab.classList.add("active");
+        document.getElementById(id).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
