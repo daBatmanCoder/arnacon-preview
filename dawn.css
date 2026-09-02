@@ -908,3 +908,44 @@ footer {
     max-width: 220px;
   }
 }
+
+/* iOS lock screen — hero phone only */
+.phone-device.lock .phone-screen {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.22) 0%, rgba(0,0,0,.05) 28%, rgba(0,0,0,.35) 100%),
+    url("lock-sunset.jpg") center/cover no-repeat,
+    url("https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=800&h=1600&q=70") center/cover no-repeat;
+  color: #fff;
+}
+.phone-device.lock .lock-status { height: 48px; padding: 0 22px 4px; }
+.phone-device.lock .lock-status > span { opacity: 0; width: 36px; }
+.phone-device.lock .lock-clock { text-align: center; padding: 6px 0 14px; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
+.phone-device.lock .lock-time { font-size: 76px; font-weight: 200; letter-spacing: -3px; line-height: .9; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif; }
+.phone-device.lock .lock-date { font-size: 19px; font-weight: 560; margin-top: 6px; letter-spacing: -.02em; }
+.phone-device.lock .lock-notifs { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; flex: 1; }
+.phone-device.lock .ios-banner {
+  display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start;
+  background: rgba(255,255,255,.28); backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-radius: 22px; padding: 10px 12px 11px;
+  border: 1px solid rgba(255,255,255,.28); box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+.phone-device.lock .ios-banner-icon {
+  width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center;
+  font-weight: 800; font-size: 16px; color: #fff;
+  background: linear-gradient(160deg, #A855F7, #D946A6);
+  box-shadow: 0 4px 10px rgba(168,85,247,.35);
+}
+.phone-device.lock .ios-banner-icon.msg { background: linear-gradient(160deg, #8B5CF6, #6366f1); }
+.phone-device.lock .ios-banner-top { display: flex; justify-content: space-between; align-items: baseline; }
+.phone-device.lock .ios-app { font-size: 11px; font-weight: 700; letter-spacing: .06em; opacity: .78; }
+.phone-device.lock .ios-when { font-size: 11px; opacity: .62; }
+.phone-device.lock .ios-title { font-size: 14px; font-weight: 700; line-height: 1.2; margin-top: 1px; }
+.phone-device.lock .ios-text { font-size: 13px; opacity: .92; margin-top: 1px; }
+.phone-device.lock .lock-docks { display: flex; justify-content: space-between; padding: 10px 22px 8px; }
+.phone-device.lock .lock-pad {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(255,255,255,.18); backdrop-filter: blur(16px);
+  display: grid; place-items: center;
+}
+.phone-device.lock .home-indicator { background: rgba(255,255,255,.85); }

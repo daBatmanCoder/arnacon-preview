@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="dawn.css">
+  <link rel="stylesheet" href="dawn.css?v=10">
 </head>
 <body>
   <nav>
@@ -52,53 +52,47 @@
     </div>
 
     <div class="phone-stage">
-      <div class="phone-device">
-        <div class="island">
-          <i class="mic"></i>
-        </div>
+      <div class="phone-device lock">
+        <div class="island"><i class="mic"></i></div>
         <div class="phone-screen">
-          <div class="status-bar">
-            <span>9:41</span>
+          <div class="status-bar lock-status">
+            <span></span>
             <div class="status-right">
-              <span class="signal-bars">
-                <i></i><i></i><i></i><i></i>
-              </span>
+              <span class="signal-bars"><i></i><i></i><i></i><i></i></span>
               5G
               <span class="battery"><b></b></span>
             </div>
           </div>
-          
-          <div class="phone-content">
-            <div class="phone-identity">you@mail.com</div>
-            
-            <div class="incoming-card">
-              <div class="incoming-header">
-                <div>
-                  <div class="incoming-from">kai.eth</div>
-                  <div class="incoming-label">incoming call · no number</div>
-                </div>
-              </div>
-              <div class="call-buttons">
-                <button class="call-btn decline">
-                  <svg viewBox="0 0 24 24"><path d="M19.79 15.41C20.74 13.24 20.74 10.76 19.79 8.59L17.05 9.83C17.65 11.21 17.65 12.79 17.05 14.17L19.79 15.41M15.5 1.5L8.5 1.5C6.29 1.5 4.5 3.29 4.5 5.5L4.5 18.5C4.5 20.71 6.29 22.5 8.5 22.5L15.5 22.5C17.71 22.5 19.5 20.71 19.5 18.5L19.5 5.5C19.5 3.29 17.71 1.5 15.5 1.5M12 20C10.9 20 10 19.1 10 18C10 16.9 10.9 16 12 16C13.1 16 14 16.9 14 18C14 19.1 13.1 20 12 20Z" transform="rotate(135 12 12)"/></svg>
-                </button>
-                <button class="call-btn accept">
-                  <svg viewBox="0 0 24 24"><path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.09 8.31 8.82 8.59L6.62 10.79Z"/></svg>
-                </button>
+          <div class="lock-clock">
+            <div class="lock-time">9:41</div>
+            <div class="lock-date">Wednesday, September 2</div>
+          </div>
+          <div class="lock-notifs">
+            <div class="ios-banner">
+              <div class="ios-banner-icon" aria-hidden="true">A</div>
+              <div class="ios-banner-body">
+                <div class="ios-banner-top"><span class="ios-app">ARNACON</span><span class="ios-when">now</span></div>
+                <div class="ios-title">Incoming Call</div>
+                <div class="ios-text">kai.eth · no number</div>
               </div>
             </div>
-
-            <div class="message-card">
-              <div class="message-from">nova.identity</div>
-              <div class="message-text">You have 2 new messages</div>
-            </div>
-
-            <div class="identity-ready">
-              <span>work@mail.com</span>
-              <span class="label">ready</span>
+            <div class="ios-banner">
+              <div class="ios-banner-icon msg" aria-hidden="true">A</div>
+              <div class="ios-banner-body">
+                <div class="ios-banner-top"><span class="ios-app">ARNACON</span><span class="ios-when">1m ago</span></div>
+                <div class="ios-title">nova.identity</div>
+                <div class="ios-text">You have 2 new messages</div>
+              </div>
             </div>
           </div>
-
+          <div class="lock-docks">
+            <div class="lock-pad" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.8"><path d="M9 18h6M12 2v1M7 7a5 5 0 0 1 10 0c0 3.5-2.5 5-2.5 8h-5C9.5 12 7 10.5 7 7z"/></svg>
+            </div>
+            <div class="lock-pad" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="12" cy="14" r="3"/><path d="M5 8h3l1.2-2h5.6L16 8h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z"/></svg>
+            </div>
+          </div>
           <div class="home-indicator"></div>
         </div>
       </div>
