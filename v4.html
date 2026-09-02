@@ -5,76 +5,90 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Arnacon — Dawn</title>
 <link rel="icon" href="arnacon-logo.svg?v=4">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff7f1;--ink:#2a1c18;--coral:#ff6b4a;--peach:#ffd3c2;--teal:#0f6e6a;--card:#fff}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-body{overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-nav{position:sticky;top:12px;z-index:10;margin:12px auto 0;max-width:1080px;display:flex;align-items:center;justify-content:space-between;padding:10px 14px 10px 12px;background:#fffc;backdrop-filter:blur(16px);border-radius:999px;box-shadow:0 8px 30px #2a1c1812}
+*{box-sizing:border-box}body{margin:0;background:#fff7f1;color:#2a1c18;font-family:'Plus Jakarta Sans',system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}.k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#ff6b4a;font-weight:600}
+h1{font-size:clamp(2.3rem,6vw,4.2rem);letter-spacing:-.04em;line-height:1.02;margin:8px 0}
+h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.03em}
+nav{position:sticky;top:12px;z-index:10;width:min(1080px,calc(100% - 24px));margin:12px auto 0;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fffc;backdrop-filter:blur(16px);border-radius:999px;box-shadow:0 8px 30px #2a1c1812}
 nav img{width:32px;height:32px;border-radius:10px}
-.pill{background:var(--ink);color:#fff;border-radius:999px;padding:10px 16px;font-size:14px;font-weight:600}
-.hero{max-width:1080px;margin:0 auto;padding:56px 20px 24px;display:grid;gap:40px;align-items:center}
-.blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.7;pointer-events:none}
-h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.02;letter-spacing:-.04em;margin:0;font-weight:700}
-.lead{font-size:1.15rem;line-height:1.55;color:#2a1c18aa;max-width:34em;margin:18px 0 0}
-.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.ghost{border:1.5px solid #2a1c1822;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14px;background:#fff8}
-.cards{display:grid;gap:14px;max-width:1080px;margin:0 auto;padding:12px 20px 64px}
-.card{background:var(--card);border-radius:28px;padding:28px;box-shadow:0 10px 40px #2a1c180c}
-.card h3{margin:0 0 8px;font-size:1.2rem}
-.phone{width:min(280px,80vw);margin:0 auto;background:#2a1c18;color:#fff;border-radius:36px;padding:14px;box-shadow:0 30px 60px #ff6b4a33}
-.screen{background:linear-gradient(180deg,#3a2a26,#2a1c18);border-radius:26px;padding:22px 18px 28px;min-height:360px}
-.chip{display:flex;justify-content:space-between;background:#fff1;border-radius:16px;padding:12px 14px;margin-top:10px;font-size:13px}
-.tag{display:inline-block;background:var(--peach);color:var(--ink);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;margin-bottom:14px}
-.stores img{height:40px}.stores .gp{height:56px}
-.stores{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:18px}
-footer{text-align:center;padding:24px;color:#2a1c1888;font-size:14px}
-@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr;padding-top:72px}.cards{grid-template-columns:1fr 1fr 1fr}}
+.btn{display:inline-flex;background:#2a1c18;color:#fff;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14px;margin:6px 6px 0 0}
+.btn.ghost{background:#fff8;color:#2a1c18;border:1.5px solid #2a1c1822}
+.sec{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:56px 0}
+.g3{display:grid;gap:14px}article{background:#fff;border-radius:24px;padding:24px;box-shadow:0 10px 40px #2a1c180c}
+.alt{background:#2a1c18;color:#fff7f1}.alt.sec{width:100%;padding:56px 24px}.alt h2,.alt p,.alt .k{max-width:1080px;margin-left:auto;margin-right:auto}
+.two{display:grid;gap:28px;align-items:center}.stores{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px}.stores img{height:40px}.stores .gp{height:56px}
+.phone{width:min(260px,80vw);background:#2a1c18;color:#fff;border-radius:32px;padding:14px;box-shadow:0 24px 50px #ff6b4a33}.ln{display:flex;justify-content:space-between;background:#fff1;border-radius:14px;padding:10px 12px;margin-top:8px;font-size:13px}
+footer{text-align:center;padding:28px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;color:#2a1c1888}
+@media(min-width:800px){.g3{grid-template-columns:1fr 1fr 1fr}.two{grid-template-columns:1.1fr .9fr}}
 </style>
 </head>
 <body>
-<nav>
-<a href="versions.html" style="display:flex;gap:10px;align-items:center;font-weight:700"><img src="arnacon-logo.svg?v=4" alt="">Arnacon</a>
-<a class="pill" href="#" onclick="goStore();return false">Download</a>
-</nav>
-<section class="hero" style="position:relative">
-<span class="blob" style="width:280px;height:280px;background:var(--peach);top:-40px;left:-40px"></span>
-<span class="blob" style="width:220px;height:220px;background:#b8ece8;right:10%;top:20%"></span>
-<div style="position:relative">
-<span class="tag">Live this morning</span>
-<h1>Call your email. Or a brand-new identity.</h1>
-<p class="lead">Download Arnacon. Talk as your email, or a brand-new identity. You choose the privacy. WhatsApp is a door you open, not the house. We only enable. You bring the brand.</p>
-<div class="btns">
-<a class="pill" href="#" onclick="goStore();return false">Download Arnacon</a>
-<a class="ghost" href="demo.html?v=5">Peek the demo</a>
-</div>
-<div class="stores">
-<a href="https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="App Store"></a>
-<a href="https://play.google.com/store/apps/details?id=com.arnacon.app"><img class="gp" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play"></a>
-</div>
-</div>
-<div class="phone" style="position:relative">
-<div class="screen">
-<p style="margin:0;opacity:.6;font-size:12px;letter-spacing:.12em;text-transform:uppercase">Good morning</p>
-<p style="font-size:1.5rem;font-weight:700;margin:10px 0 18px">Ready when you are</p>
-<div class="chip"><span>you@mail.com</span><span style="color:#ffb09a">ring</span></div>
-<div class="chip"><span>kai.eth</span><span style="color:#b8ece8">minted</span></div>
-<div class="chip"><span>nova.identity</span><span style="color:#ffd3c2">new</span></div>
-</div>
+<nav><a href="versions.html" style="display:flex;gap:10px;align-items:center;font-weight:700"><img src="arnacon-logo.svg?v=4" alt="">Arnacon</a><span><a href="privacy.html" style="margin-right:10px">Privacy</a><a class="btn" href="#" onclick="goStore();return false">Download</a></span></nav>
+<header class="sec">
+<p class="k">Live this morning</p>
+<h1>Your email. A new identity.</h1>
+<p style="max-width:36em;line-height:1.5;color:#2a1c18aa">Download Arnacon. Talk without a number. You choose the privacy. You bring the brand. We only enable. Anyone can run their own version.</p>
+<p><a class="btn" href="#" onclick="goStore();return false">Download Arnacon</a><a class="btn ghost" href="demo.html">Peek the demo</a></p>
+<div class="stores" id="download"><a href="https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB"><img alt="App Store" src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"></a><a href="https://play.google.com/store/apps/details?id=com.arnacon.app"><img class="gp" alt="Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"></a></div>
+</header>
+
+<section class="sec">
+<p class="k">What you get today</p>
+<h2>Download it. Use it. That is the product.</h2>
+<div class="g3">
+<article><h3>Talk as your email</h3><p>you@mail.com rings. The address you already own is enough. No SIM to rent.</p></article>
+<article><h3>Or a new identity</h3><p>A name you mint this morning. Private until you open it. Switch in one drawer.</p></article>
+<article><h3>No number required</h3><p>A phone number is optional, not the gate. Stay on the rail, or open a door.</p></article>
 </div>
 </section>
-<section class="cards">
-<div class="card"><h3>On the rail</h3><p style="margin:0;color:#2a1c18aa;line-height:1.55">Email to identity. No number. This path does not go to WhatsApp.</p></div>
-<div class="card"><h3>The door, named</h3><p style="margin:0;color:#2a1c18aa;line-height:1.55">EU, both opt in. Then Meta’s terms, including metadata. Said here, not at the maker.</p></div>
-<div class="card"><h3>Your version</h3><p style="margin:0;color:#2a1c18aa;line-height:1.55">Anyone can run their own. They choose the door, the customers, the brand.</p></div>
+<section class="sec two">
+<div>
+<p class="k">Demo</p>
+<h2>See it. Then take it with you.</h2>
+<p>Same email. Same new identity. Same calls. Then download.</p>
+<p><a class="btn" href="demo.html">Open demo</a></p>
+</div>
+<div class="phone"><div class="ui">
+<p class="k">Arnacon</p>
+<p class="id">you@mail.com</p>
+<div class="ln"><span>kai.eth</span><span>ready</span></div>
+<div class="ln"><span>nova.identity</span><span>ready</span></div>
+<div class="ln"><span>work@mail.com</span><span>ready</span></div>
+</div></div>
 </section>
-<section class="cards">
-<div class="card"><h3>Your email, ringing</h3><p style="margin:0;color:#2a1c18aa;line-height:1.55">The address you already have is a voice. No number to rent.</p></div>
-<div class="card"><h3>A name you mint</h3><p style="margin:0;color:#2a1c18aa;line-height:1.55">A brand-new identity. Private until you open it. Switch in one drawer.</p></div>
-<div class="card"><h3>Your brand on the rail</h3><p style="margin:0;color:#2a1c18aa;line-height:1.55">We only enable. You keep the customers, the privacy, the name on the door.</p></div>
+<section class="sec alt">
+<p class="k">The principle</p>
+<h2>We do not become your brand.</h2>
+<p>Anyone can run their own version. They choose the privacy. They choose the customers. Arnacon only enables. You bring the brand.</p>
 </section>
-<footer><a href="privacy.html">Privacy</a> · <a href="versions.html">All five versions</a> · <a href="demo.html?v=5">Demo</a></footer>
+<section class="sec">
+<p class="k">You choose the privacy</p>
+<h2>Stay on the rail. Or open a door.</h2>
+<div class="g3">
+<article><h3>01 · On Arnacon</h3><p>Email to identity. Identity to identity. This path does not go to WhatsApp. Meta is not invited.</p></article>
+<article><h3>02 · The WhatsApp door</h3><p>EU. Both sides opt in. Then their terms, including metadata they store. Said here, not at the maker.</p></article>
+<article><h3>03 · Your version</h3><p>Anyone can run their own version. They choose if the door exists. They choose the customers.</p></article>
+</div>
+<p><a href="privacy.html">Privacy policy →</a></p>
+</section>
+<section class="sec">
+<p class="k">For builders</p>
+<h2>You bring the brand. We bring the rails.</h2>
+<div class="g3">
+<article><h3>Invisible start</h3><p>People sign in with email. They never see our name unless you want them to.</p></article>
+<article><h3>Your brand, end to end</h3><p>Logo, colors, customers, privacy model. The only product they see is yours.</p></article>
+<article><h3>Your customers, your rules</h3><p>Run your own version. Pick who you serve. We enable. We are not the face of it.</p></article>
+</div>
+</section>
+<section class="sec alt">
+<h2>Talk without a number.</h2>
+<p>Email. A new identity. Your privacy. Your brand. Today.</p>
+<p><a class="btn" href="#" onclick="goStore();return false">Download Arnacon</a> <a class="btn ghost" href="demo.html">Try demo</a></p>
+</section>
+
+<footer><a href="privacy.html">Privacy</a><a href="https://www.arnacon.com/tandc">Terms</a><a href="versions.html">Versions</a><a href="demo.html">Demo</a><a href="mailto:support@arnacon.com">support@arnacon.com</a></footer>
 <script>
 var IOS='https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB',AND='https://play.google.com/store/apps/details?id=com.arnacon.app';
 function goStore(){var u=navigator.userAgent||'';location.href=/iPhone|iPad|iPod/i.test(u)?IOS:AND}
