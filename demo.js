@@ -6,15 +6,15 @@ document.querySelectorAll(".store-link").forEach(a => { if (store) a.href = stor
 const $ = id => document.getElementById(id);
 const products = [
   { id: "you@mail.com", kind: "email" },
-  { id: "matan.cellact.eth", kind: "ens" },
-  { id: "972557140063", kind: "number" },
+  { id: "kai.eth", kind: "ens" },
+  { id: "work@mail.com", kind: "email" },
   { id: "vigilantviper243266", kind: "handle" },
-  { id: "972557140076", kind: "number" },
+  { id: "nova.identity", kind: "handle" },
   { id: "lasereclipse110282", kind: "handle" },
-  { id: "972557140075", kind: "number" }
+  { id: "friends.identity", kind: "handle" }
 ];
 const chats = {
-  "matan.cellact.eth": {
+  "kai.eth": {
     snip: "I am loving Arnacon so much", when: "24 Jun",
     msgs: [
       { k: "chip", t: "24/06/2026" },
@@ -38,7 +38,7 @@ const chats = {
       { k: "in", t: "See you on the other identity.", at: "14:14" }
     ]
   },
-  "972557140059": {
+  "hello@mail.com": {
     snip: "Great, and you?", when: "24 Jun",
     msgs: [
       { k: "chip", t: "24/06/2026" },
@@ -62,13 +62,13 @@ const chats = {
     ]
   },
   "*9225": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "09:12" }] },
-  "972557258108": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "16:20" }] },
-  "972557140107": { snip: "Hi", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hi", at: "10:01" }, { k: "out", t: "Hey", at: "10:02" }] },
-  "972557140106": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Incoming call", at: "12:40" }] },
-  "972557140105": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "13:11" }] },
-  "972557140104": { snip: "Outgoing call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Outgoing call", at: "15:02" }] },
-  "972557140103": { snip: "Yo", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Yo", at: "18:22" }] },
-  "972557140058": { snip: "Hii", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hii", at: "19:01" }] },
+  "river.studio": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "16:20" }] },
+  "luna.eth": { snip: "Hi", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hi", at: "10:01" }, { k: "out", t: "Hey", at: "10:02" }] },
+  "atlas.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "12:40" }] },
+  "mira@work.co": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "13:11" }] },
+  "pixel.wave": { snip: "Outgoing call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Outgoing call", at: "15:02" }] },
+  "echo.wave": { snip: "Yo", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Yo", at: "18:22" }] },
+  "shop.identity": { snip: "Hii", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hii", at: "19:01" }] },
   "northline.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "16:40" }] }
 };
 const replies = [
