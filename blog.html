@@ -1,1 +1,701 @@
-FILE_BLOG_HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog — Arnacon</title>
+  <link rel="icon" href="arnacon-logo.svg?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fff7f1;
+      --coral: #ff6b4a;
+      --coral-dark: #e5563d;
+      --ink: #2a1c18;
+      --ink-muted: rgba(42,28,24,.65);
+      --glass: rgba(255,255,255,.92);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    nav {
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+      width: min(1120px, calc(100% - 24px));
+      margin: 12px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      box-shadow: 0 4px 20px rgba(42,28,24,.08);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .nav-brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--coral);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 14px;
+      border: 0;
+      cursor: pointer;
+      transition: background .2s;
+      font-family: inherit;
+    }
+
+    .btn:hover { background: var(--coral-dark); }
+
+    .btn.ghost, .ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid rgba(42,28,24,.15);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn.ghost:hover, .ghost:hover {
+      border-color: rgba(42,28,24,.3);
+      background: rgba(42,28,24,.03);
+    }
+
+    .blog-container { max-width: 1120px; margin: 0 auto; padding: 64px 20px 100px; }
+    .blog-header { text-align: center; margin-bottom: 40px; }
+    .blog-header h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .blog-header p { color: var(--ink-muted); font-size: 1.15rem; }
+
+    .search-bar { max-width: 520px; margin: 0 auto 28px; position: relative; }
+    .search-bar input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: #fff;
+      border: 2px solid rgba(42,28,24,.12);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .search-bar input::placeholder { color: var(--ink-muted); }
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--coral);
+    }
+
+    .tag-filters {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 36px;
+    }
+    .tag-chip {
+      font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+      border: 1.5px solid rgba(255,107,74,.2);
+      background: rgba(255,107,74,.12);
+      color: var(--coral-dark); cursor: pointer; transition: all .2s;
+      font-family: inherit;
+    }
+    .tag-chip:hover, .tag-chip.active {
+      color: #fff; border-color: var(--coral); background: var(--coral);
+    }
+
+    .posts-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px; margin-bottom: 64px;
+    }
+    .post-card {
+      background: #fff;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(42,28,24,.06);
+      transition: transform .2s, box-shadow .2s; cursor: pointer;
+      display: flex; flex-direction: column;
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(42,28,24,.12);
+    }
+    .post-card-image {
+      width: 100%; height: 200px; object-fit: cover;
+      background: linear-gradient(135deg, rgba(255,107,74,.2), rgba(255,107,74,.05));
+    }
+    .post-card-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .post-card-title {
+      font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em;
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .post-card-excerpt {
+      color: var(--ink-muted); font-size: 15px; line-height: 1.6;
+      margin-bottom: 16px; flex: 1;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .post-card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; color: var(--ink-muted); margin-bottom: 16px;
+    }
+    .post-card-actions { display: flex; gap: 8px; }
+    .post-card-actions .btn-sm {
+      flex: 1; padding: 10px; text-align: center; border-radius: 12px;
+      font-size: 13px; font-weight: 600; border: 1.5px solid rgba(42,28,24,.12);
+      background: #fff; color: var(--ink); cursor: pointer; font-family: inherit;
+    }
+    .post-card-actions .btn-sm.primary {
+      background: var(--coral); border-color: var(--coral); color: #fff;
+    }
+
+    .post-view { max-width: 720px; margin: 0 auto; display: none; }
+    .post-view.active { display: block; }
+    .post-header-image {
+      width: 100%; height: 400px; object-fit: cover; border-radius: 16px;
+      margin-bottom: 32px; background: linear-gradient(135deg, rgba(255,107,74,.2), rgba(255,107,74,.05));
+    }
+    .post-title { font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -.04em; line-height: 1.1; margin-bottom: 24px; font-weight: 700; }
+    .post-meta {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 24px; margin-bottom: 32px; border-bottom: 2px solid rgba(42,28,24,.08);
+      color: var(--ink-muted); font-size: 14px;
+    }
+    .post-meta strong { color: var(--ink); }
+    .post-content { font-size: 1.05rem; line-height: 1.7; color: var(--ink); }
+    .post-content h1, .post-content h2, .post-content h3 {
+      color: var(--ink); margin-top: 32px; margin-bottom: 16px;
+      letter-spacing: -.03em; line-height: 1.2;
+    }
+    .post-content h1 { font-size: 2rem; }
+    .post-content h2 { font-size: 1.7rem; }
+    .post-content h3 { font-size: 1.3rem; }
+    .post-content p { margin-bottom: 20px; }
+    .post-content a { color: var(--coral); text-decoration: underline; }
+    .post-content ul, .post-content ol { margin: 20px 0; padding-left: 28px; }
+    .post-content li { margin-bottom: 10px; }
+    .post-content code {
+      background: rgba(255,107,74,.1); padding: 2px 6px; border-radius: 4px;
+      font-family: ui-monospace, monospace; font-size: .9em;
+    }
+    .post-content pre {
+      background: #fff; border: 1.5px solid rgba(42,28,24,.12);
+      padding: 16px; border-radius: 12px; overflow-x: auto; margin: 24px 0;
+    }
+    .post-content pre code { background: none; padding: 0; }
+    .post-content blockquote {
+      border-left: 3px solid var(--coral); padding-left: 20px;
+      margin: 24px 0; color: var(--ink-muted); font-style: italic;
+    }
+    .post-content img { max-width: 100%; border-radius: 12px; margin: 24px 0; }
+
+    .post-tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 32px 0; }
+    .post-tag {
+      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,107,74,.12); color: var(--coral-dark);
+    }
+
+    .post-actions { display: flex; gap: 12px; margin: 0 0 32px; }
+    .wallet-info {
+      background: rgba(255,107,74,.08); border: 1.5px solid rgba(255,107,74,.2);
+      padding: 16px; border-radius: 12px; margin: 32px 0;
+    }
+    .wallet-info a { color: var(--coral); text-decoration: none; font-weight: 600; }
+
+    .featured-posts {
+      margin-top: 64px; padding-top: 48px; border-top: 2px solid rgba(42,28,24,.08);
+    }
+    .featured-posts h3 {
+      font-size: 1.8rem; margin-bottom: 28px; text-align: center;
+      letter-spacing: -.03em;
+    }
+
+    .empty-state, .loading-state, .error-state { text-align: center; padding: 80px 20px; }
+    .empty-state h3, .loading-state h3, .error-state h3 { font-size: 24px; margin-bottom: 12px; }
+    .empty-state p, .loading-state p, .error-state p { color: var(--ink-muted); font-size: 16px; }
+
+    .new-post-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 40;
+      display: none; align-items: center; gap: 8px;
+      padding: 14px 24px; border-radius: 999px;
+      background: var(--coral);
+      box-shadow: 0 8px 32px rgba(255,107,74,.28); font-weight: 600;
+      font-size: 15px; color: white; border: none; cursor: pointer;
+      font-family: inherit;
+    }
+    .new-post-btn:hover { background: var(--coral-dark); transform: translateY(-2px); }
+    body[data-wallet-connected="true"] .new-post-btn { display: flex; }
+
+    footer {
+      padding: 40px 0;
+      border-top: 2px solid rgba(42,28,24,.08);
+      margin-top: 20px;
+    }
+    .footer-content {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 14px; color: var(--ink-muted); }
+    .footer-links a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .nav-links a:not(.btn) { display: none; }
+      .blog-container { padding: 48px 16px 100px; width: calc(100% - 8px); }
+      .posts-grid { grid-template-columns: 1fr; }
+      .post-title { font-size: 2rem; }
+      .post-header-image { height: 240px; }
+      .new-post-btn { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <img src="arnacon-logo.svg?v=4" alt="Arnacon">
+      <span>Arnacon</span>
+    </a>
+    <div class="nav-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="demo.html">Demo</a>
+      <a href="index.html#download" class="btn">Download</a>
+      <appkit-button id="wallet-btn"></appkit-button>
+    </div>
+  </nav>
+
+  <div class="blog-container">
+    <div id="blog-list">
+      <div class="blog-header">
+        <h1>Blog</h1>
+        <p>Insights and updates from the Arnacon community</p>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search posts..." />
+      </div>
+
+      <div class="tag-filters" id="tag-filters"></div>
+
+      <div class="loading-state" id="loading-state">
+        <h3>Loading posts...</h3>
+        <p>Fetching the latest content</p>
+      </div>
+
+      <div class="error-state" id="error-state" style="display: none;">
+        <h3>Unable to load posts</h3>
+        <p>Please try again later</p>
+      </div>
+
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <h3>No posts found</h3>
+        <p>Try adjusting your search or filters</p>
+      </div>
+
+      <div class="posts-grid" id="posts-grid"></div>
+    </div>
+
+    <div id="post-view" class="post-view"></div>
+  </div>
+
+  <button class="new-post-btn" onclick="window.location='blog-new.html'">
+    <span>+ New Post</span>
+  </button>
+
+  <footer>
+    <div class="footer-content">
+      <span style="color: var(--ink-muted);">© 2026 Arnacon</span>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="https://www.arnacon.com/tandc">Terms</a>
+        <a href="demo.html">Demo</a>
+        <a href="versions.html">Versions</a>
+        <a href="mailto:support@arnacon.com">support@arnacon.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+    import { getFirestore, collection, query, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+    import { createAppKit } from 'https://cdn.jsdelivr.net/npm/@reown/appkit@1.7.0/+esm';
+    import { EthersAdapter } from 'https://cdn.jsdelivr.net/npm/@reown/appkit-adapter-ethers@1.7.0/+esm';
+    import { mainnet, polygon } from 'https://cdn.jsdelivr.net/npm/@reown/appkit@1.7.0/networks/+esm';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqyYGQtdiaHRL5xQYv7ZO-hDbARAIZlmw",
+      authDomain: "arnacon-production-gcp.firebaseapp.com",
+      projectId: "arnacon-production-gcp",
+      storageBucket: "arnacon-production-gcp.appspot.com",
+      messagingSenderId: "343948402138",
+      appId: "1:343948402138:web:507c19ea2648df0ddbb4e3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const projectId = '2217f1bdaf9856078d15617a25f6bb93';
+    const metadata = {
+      name: 'Arnacon Blog',
+      description: 'Arnacon Blog Platform',
+      url: window.location.origin,
+      icons: ['https://arnacon.com/arnacon-logo.svg']
+    };
+
+    const modal = createAppKit({
+      adapters: [new EthersAdapter()],
+      networks: [polygon, mainnet],
+      metadata,
+      projectId,
+      features: {
+        analytics: false
+      }
+    });
+
+    modal.subscribeState((state) => {
+      const isConnected = state.open === false && state.selectedNetworkId;
+      if (isConnected && modal.getAddress()) {
+        const address = modal.getAddress();
+        localStorage.setItem('walletConnected', 'true');
+        localStorage.setItem('walletAddress', address);
+        document.body.setAttribute('data-wallet-connected', 'true');
+        window.dispatchEvent(new CustomEvent('wallet_connected', { detail: { address } }));
+      } else {
+        localStorage.removeItem('walletConnected');
+        localStorage.removeItem('walletAddress');
+        document.body.removeAttribute('data-wallet-connected');
+        window.dispatchEvent(new CustomEvent('wallet_disconnected'));
+      }
+    });
+
+    if (localStorage.getItem('walletConnected') === 'true') {
+      document.body.setAttribute('data-wallet-connected', 'true');
+    }
+
+    let allPosts = [];
+    let filteredPosts = [];
+    let selectedTag = 'All';
+
+    async function loadPosts() {
+      try {
+        const q = query(collection(db, 'blogPosts'), orderBy('date', 'desc'));
+        const querySnapshot = await getDocs(q);
+        
+        allPosts = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        filteredPosts = [...allPosts];
+        
+        document.getElementById('loading-state').style.display = 'none';
+        
+        if (allPosts.length === 0) {
+          document.getElementById('empty-state').style.display = 'block';
+        } else {
+          renderTagFilters();
+          renderPosts();
+          const urlParams = new URLSearchParams(window.location.search);
+          const postId = urlParams.get('p');
+          if (postId) {
+            showPost(postId);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('error-state').style.display = 'block';
+      }
+    }
+
+    function getAllTags() {
+      const tagsSet = new Set();
+      allPosts.forEach(post => {
+        if (post.tags && Array.isArray(post.tags)) {
+          post.tags.forEach(tag => tagsSet.add(tag));
+        }
+      });
+      return ['All', ...Array.from(tagsSet).sort()];
+    }
+
+    function renderTagFilters() {
+      const tags = getAllTags();
+      const container = document.getElementById('tag-filters');
+      container.innerHTML = tags.map(tag => 
+        `<button class="tag-chip ${tag === selectedTag ? 'active' : ''}" data-tag="${tag}">${tag}</button>`
+      ).join('');
+
+      container.querySelectorAll('.tag-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          selectedTag = chip.dataset.tag;
+          filterPosts();
+        });
+      });
+    }
+
+    function filterPosts() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      
+      filteredPosts = allPosts.filter(post => {
+        const matchesTag = selectedTag === 'All' || (post.tags && post.tags.includes(selectedTag));
+        const matchesSearch = !searchTerm || 
+          post.title?.toLowerCase().includes(searchTerm) ||
+          post.excerpt?.toLowerCase().includes(searchTerm) ||
+          post.content?.toLowerCase().includes(searchTerm);
+        return matchesTag && matchesSearch;
+      });
+
+      renderTagFilters();
+      renderPosts();
+    }
+
+    function convertIPFS(url) {
+      if (!url) return '';
+      if (url.startsWith('ipfs://')) {
+        return url.replace('ipfs://', 'https://ipfs.io/ipfs/');
+      }
+      return url;
+    }
+
+    function renderPosts() {
+      const container = document.getElementById('posts-grid');
+      
+      if (filteredPosts.length === 0) {
+        document.getElementById('empty-state').style.display = 'block';
+        container.innerHTML = '';
+        return;
+      }
+
+      document.getElementById('empty-state').style.display = 'none';
+      
+      container.innerHTML = filteredPosts.map(post => {
+        const imageUrl = convertIPFS(post.headerImageUrl);
+        const date = post.date?.toDate ? post.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Unknown date';
+        
+        return `
+          <div class="post-card" onclick="showPost('${post.id}')">
+            ${imageUrl ? `<img class="post-card-image" src="${imageUrl}" alt="${post.title || 'Post'}" loading="lazy" />` : '<div class="post-card-image"></div>'}
+            <div class="post-card-content">
+              <h3 class="post-card-title">${post.title || 'Untitled'}</h3>
+              <p class="post-card-excerpt">${post.excerpt || ''}</p>
+              <div class="post-card-meta">
+                <span>${date}</span>
+                ${post.readTime ? `<span>${post.readTime} min read</span>` : ''}
+              </div>
+              <div class="post-card-actions">
+                <button class="btn-sm" onclick="event.stopPropagation(); sharePost('${post.id}', '${(post.title || '').replace(/'/g, "\\'")}')">Share</button>
+                <button class="btn-sm primary">Read more</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function parseMarkdown(md) {
+      if (!md) return '';
+      
+      let html = md
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
+        .replace(/```(\w+)?\n([\s\S]+?)```/g, '<pre><code>$2</code></pre>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/^> (.+)/gim, '<blockquote>$1</blockquote>')
+        .replace(/^\* (.+)/gim, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br />');
+      
+      return `<p>${html}</p>`.replace(/<p><\/p>/g, '').replace(/<p>(<h[1-3]>)/g, '$1').replace(/(<\/h[1-3]>)<\/p>/g, '$1');
+    }
+
+    window.showPost = function(postId) {
+      const post = allPosts.find(p => p.id === postId);
+      if (!post) return;
+
+      const imageUrl = convertIPFS(post.headerImageUrl);
+      const date = post.date?.toDate ? post.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown date';
+      const content = parseMarkdown(post.content || '');
+      const otherPosts = allPosts.filter(p => p.id !== postId).slice(0, 3);
+      
+      document.getElementById('blog-list').style.display = 'none';
+      const postView = document.getElementById('post-view');
+      postView.className = 'post-view active';
+      
+      postView.innerHTML = `
+        <div class="post-actions">
+          <button class="btn" onclick="backToBlog()">← Back to Blog</button>
+          <button class="ghost" onclick="sharePost('${post.id}', '${(post.title || '').replace(/'/g, "\\'")}')">Share</button>
+        </div>
+
+        ${imageUrl ? `<img class="post-header-image" src="${imageUrl}" alt="${post.title || 'Post'}" />` : ''}
+        
+        <h1 class="post-title">${post.title || 'Untitled'}</h1>
+        
+        <div class="post-meta">
+          ${post.author ? `<span><strong>By</strong> ${post.author}</span>` : ''}
+          <span><strong>Published</strong> ${date}</span>
+          ${post.readTime ? `<span><strong>Read time</strong> ${post.readTime} min</span>` : ''}
+        </div>
+
+        ${post.address || post.walletAddress ? `
+          <div class="wallet-info">
+            <strong>Author wallet:</strong> 
+            <a href="https://etherscan.io/address/${post.address || post.walletAddress}" target="_blank" rel="noopener">
+              ${post.address || post.walletAddress}
+            </a>
+          </div>
+        ` : ''}
+
+        <div class="post-content">${content}</div>
+
+        ${post.tags && post.tags.length > 0 ? `
+          <div class="post-tags">
+            ${post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
+          </div>
+        ` : ''}
+
+        ${otherPosts.length > 0 ? `
+          <div class="featured-posts">
+            <h3>More from the blog</h3>
+            <div class="posts-grid">
+              ${otherPosts.map(p => {
+                const pImageUrl = convertIPFS(p.headerImageUrl);
+                const pDate = p.date?.toDate ? p.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Unknown date';
+                return `
+                  <div class="post-card" onclick="showPost('${p.id}')">
+                    ${pImageUrl ? `<img class="post-card-image" src="${pImageUrl}" alt="${p.title || 'Post'}" loading="lazy" />` : '<div class="post-card-image"></div>'}
+                    <div class="post-card-content">
+                      <h3 class="post-card-title">${p.title || 'Untitled'}</h3>
+                      <p class="post-card-excerpt">${p.excerpt || ''}</p>
+                      <div class="post-card-meta">
+                        <span>${pDate}</span>
+                        ${p.readTime ? `<span>${p.readTime} min read</span>` : ''}
+                      </div>
+                      <div class="post-card-actions">
+                        <button class="btn-sm primary">Read more</button>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      window.history.pushState({ postId }, '', `blog.html?p=${postId}`);
+      window.scrollTo(0, 0);
+    };
+
+    window.backToBlog = function() {
+      document.getElementById('blog-list').style.display = 'block';
+      document.getElementById('post-view').className = 'post-view';
+      window.history.pushState({}, '', 'blog.html');
+      window.scrollTo(0, 0);
+    };
+
+    window.sharePost = function(postId, title) {
+      const url = `${window.location.origin}/blog.html?p=${postId}`;
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          alert('Link copied to clipboard!');
+        });
+      }
+    };
+
+    document.getElementById('search-input').addEventListener('input', filterPosts);
+
+    window.addEventListener('popstate', (e) => {
+      if (e.state?.postId) {
+        showPost(e.state.postId);
+      } else {
+        backToBlog();
+      }
+    });
+
+    loadPosts();
+
+    (function(){
+      var h = (location.hostname||'').replace(/^www\./,'').toLowerCase();
+      if (h !== 'arnacon.com') return;
+      fetch('https://europe-west1-arnacon-production-gcp.cloudfunctions.net/website-analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page: location.pathname + location.search,
+          referrer: document.referrer || 'direct',
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          screenWidth: innerWidth,
+          screenHeight: innerHeight,
+          timestamp: new Date().toISOString()
+        }),
+        keepalive: true
+      }).catch(function(){});
+    })();
+  </script>
+</body>
+</html>
