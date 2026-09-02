@@ -13,64 +13,91 @@ const products = [
   { id: "lasereclipse110282", kind: "handle" },
   { id: "friends.identity", kind: "handle" }
 ];
-const chats = {
+const inbox = {
+  "you@mail.com": {
+    "kai.eth": { snip: "I am loving Arnacon so much", when: "24 Jun", msgs: [
+        { k: "chip", t: "24/06/2026" }, { k: "out", t: "Hey how are you?", at: "14:02" }, { k: "in", t: "Great, and you?", at: "14:03" },
+        { k: "pill", t: "Incoming call", at: "14:05" }, { k: "pill", t: "Outgoing call", at: "14:05" },
+        { k: "out", t: "I am loving Arnacon so much", at: "14:07" }, { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:07" },
+        { k: "in", t: "Because you still thought you needed a number.", at: "14:08" }, { k: "in", t: "Call me as you@mail.com — no number.", at: "14:08" },
+        { k: "out", t: "Wait. I called your email?", at: "14:09" }, { k: "in", t: "Encrypted end to end.", at: "14:09" },
+        { k: "out", t: "That's actually wild.", at: "14:10" }, { k: "in", t: "Switch identity whenever the context changes.", at: "14:10" },
+        { k: "out", t: "So I don't give out my number?", at: "14:11" }, { k: "in", t: "No SIM. No number on a bill.", at: "14:11" },
+        { k: "out", t: "Ok I'm downloading this for the team.", at: "14:12" }, { k: "in", t: "The brand is yours. Arnacon only enables it.", at: "14:12" },
+        { k: "pill", t: "Outgoing call", at: "14:13" }, { k: "in", t: "See you on the other identity.", at: "14:14" }
+      ] },
+    "hello@mail.com": { snip: "Want to hop on a call as the email?", when: "24 Jun", msgs: [
+        { k: "chip", t: "24/06/2026" }, { k: "out", t: "Hey — trying Arnacon.", at: "11:02" }, { k: "in", t: "Call me as you@mail.com — no number.", at: "11:03" },
+        { k: "pill", t: "Outgoing call", at: "11:04" }, { k: "out", t: "Hey how are you?", at: "14:02" }, { k: "in", t: "Great, and you?", at: "14:02" },
+        { k: "in", t: "Want to hop on a call as the email?", at: "14:11" }
+      ] },
+    "luna.eth": { snip: "Hi", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hi", at: "10:01" }, { k: "out", t: "Hey", at: "10:02" }] },
+    "river.studio": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "16:20" }] },
+    "northline.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "16:40" }] }
+  },
   "kai.eth": {
-    snip: "I am loving Arnacon so much", when: "24 Jun",
-    msgs: [
-      { k: "chip", t: "24/06/2026" },
-      { k: "out", t: "Hey how are you?", at: "14:02" },
-      { k: "in", t: "Great, and you?", at: "14:03" },
-      { k: "pill", t: "Incoming call", at: "14:05" },
-      { k: "pill", t: "Outgoing call", at: "14:05" },
-      { k: "out", t: "I am loving Arnacon so much", at: "14:07" },
-      { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:07" },
-      { k: "in", t: "Because you still thought you needed a number.", at: "14:08" },
-      { k: "in", t: "Call me as you@mail.com — no number.", at: "14:08" },
-      { k: "out", t: "Wait. I called your email?", at: "14:09" },
-      { k: "in", t: "Encrypted end to end.", at: "14:09" },
-      { k: "out", t: "That's actually wild.", at: "14:10" },
-      { k: "in", t: "Switch identity whenever the context changes.", at: "14:10" },
-      { k: "out", t: "So I don't give out my number?", at: "14:11" },
-      { k: "in", t: "No SIM. No number on a bill.", at: "14:11" },
-      { k: "out", t: "Ok I'm downloading this for the team.", at: "14:12" },
-      { k: "in", t: "The brand is yours. Arnacon only enables it.", at: "14:12" },
-      { k: "pill", t: "Outgoing call", at: "14:13" },
-      { k: "in", t: "See you on the other identity.", at: "14:14" }
-    ]
+    "atlas.ops": { snip: "Your .eth is the number now", when: "25 Jun", msgs: [
+        { k: "chip", t: "25/06/2026" }, { k: "in", t: "You live as kai.eth in here.", at: "09:12" }, { k: "out", t: "So people call the name, not a SIM.", at: "09:13" },
+        { k: "in", t: "Yes. Encrypted end to end.", at: "09:13" }, { k: "pill", t: "Outgoing call", at: "09:20" },
+        { k: "out", t: "That actually worked.", at: "09:22" }, { k: "in", t: "Your .eth is the number now.", at: "09:22" }
+      ] },
+    "nova.identity": { snip: "Switch when the context changes", when: "23 Jun", msgs: [
+        { k: "chip", t: "23/06/2026" }, { k: "out", t: "This is my public identity.", at: "18:01" }, { k: "in", t: "Keep work off this one.", at: "18:02" }, { k: "in", t: "Switch when the context changes.", at: "18:02" }
+      ] },
+    "pixel.wave": { snip: "Outgoing call", when: "21 Jun", msgs: [{ k: "chip", t: "21/06/2026" }, { k: "pill", t: "Outgoing call", at: "12:08" }] },
+    "shop.identity": { snip: "Invoice sent", when: "20 Jun", msgs: [{ k: "chip", t: "20/06/2026" }, { k: "in", t: "Invoice sent", at: "11:40" }, { k: "out", t: "Got it", at: "11:41" }] },
+    "echo.wave": { snip: "Yo", when: "18 Jun", msgs: [{ k: "chip", t: "18/06/2026" }, { k: "in", t: "Yo", at: "21:04" }, { k: "out", t: "Hey", at: "21:05" }] }
   },
-  "hello@mail.com": {
-    snip: "Great, and you?", when: "24 Jun",
-    msgs: [
-      { k: "chip", t: "24/06/2026" },
-      { k: "out", t: "Hey — trying Arnacon.", at: "11:02" },
-      { k: "in", t: "Call me as you@mail.com — no number.", at: "11:03" },
-      { k: "pill", t: "Outgoing call", at: "11:04" },
-      { k: "out", t: "Hey how are you?", at: "14:02" },
-      { k: "in", t: "Great, and you?", at: "14:02" },
-      { k: "pill", t: "Incoming call", at: "14:05" },
-      { k: "pill", t: "Outgoing call", at: "14:05" },
-      { k: "pill", t: "Outgoing call", at: "14:06" },
-      { k: "out", t: "I am loving Arnacon so much", at: "14:07" },
-      { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:08" },
-      { k: "in", t: "Switch identity whenever the context changes.", at: "14:08" },
-      { k: "in", t: "Encrypted end to end.", at: "14:09" },
-      { k: "out", t: "So this is my work identity.", at: "14:10" },
-      { k: "in", t: "I just picked a new identity for this.", at: "14:10" },
-      { k: "out", t: "Calling you now.", at: "14:11" },
-      { k: "in", t: "Want to hop on a call as the email?", at: "14:11" },
-      { k: "in", t: "Done. See you on the other identity.", at: "14:12" }
-    ]
+  "work@mail.com": {
+    "mira@work.co": { snip: "Standup moved to the email identity", when: "25 Jun", msgs: [
+        { k: "chip", t: "25/06/2026" }, { k: "in", t: "Can you join as work@mail.com?", at: "08:40" }, { k: "out", t: "On it. This is the work identity.", at: "08:41" },
+        { k: "pill", t: "Outgoing call", at: "08:45" }, { k: "in", t: "Standup moved to the email identity.", at: "08:50" }, { k: "out", t: "Customers never see the other one.", at: "08:51" }
+      ] },
+    "northline.ops": { snip: "Deck is in the thread", when: "24 Jun", msgs: [
+        { k: "chip", t: "24/06/2026" }, { k: "in", t: "Deck is in the thread", at: "16:02" }, { k: "out", t: "Opening it now.", at: "16:03" }, { k: "pill", t: "Incoming call", at: "16:10" }
+      ] },
+    "hello@mail.com": { snip: "Use a different identity for this", when: "22 Jun", msgs: [
+        { k: "chip", t: "22/06/2026" }, { k: "out", t: "Don't mix this with personal.", at: "10:11" }, { k: "in", t: "Use a different identity for this.", at: "10:12" }
+      ] },
+    "atlas.ops": { snip: "Incoming call", when: "21 Jun", msgs: [{ k: "chip", t: "21/06/2026" }, { k: "pill", t: "Incoming call", at: "15:33" }] },
+    "river.studio": { snip: "Brief looks good", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Brief looks good", at: "13:20" }, { k: "out", t: "Shipping today.", at: "13:21" }] }
   },
-  "*9225": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "09:12" }] },
-  "river.studio": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "16:20" }] },
-  "luna.eth": { snip: "Hi", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hi", at: "10:01" }, { k: "out", t: "Hey", at: "10:02" }] },
-  "atlas.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "12:40" }] },
-  "mira@work.co": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "13:11" }] },
-  "pixel.wave": { snip: "Outgoing call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Outgoing call", at: "15:02" }] },
-  "echo.wave": { snip: "Yo", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Yo", at: "18:22" }] },
-  "shop.identity": { snip: "Hii", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hii", at: "19:01" }] },
-  "northline.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "16:40" }] }
+  "vigilantviper243266": {
+    "lasereclipse110282": { snip: "No names. That's the point.", when: "25 Jun", msgs: [
+        { k: "chip", t: "25/06/2026" }, { k: "in", t: "You picked a throwaway.", at: "22:10" }, { k: "out", t: "No names. That's the point.", at: "22:11" },
+        { k: "in", t: "Call still works.", at: "22:12" }, { k: "pill", t: "Outgoing call", at: "22:14" }
+      ] },
+    "echo.wave": { snip: "Yo", when: "23 Jun", msgs: [{ k: "chip", t: "23/06/2026" }, { k: "in", t: "Yo", at: "19:01" }, { k: "out", t: "Hey", at: "19:02" }] },
+    "*9225": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "09:12" }] },
+    "shop.identity": { snip: "Hii", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hii", at: "19:01" }] }
+  },
+  "nova.identity": {
+    "kai.eth": { snip: "Public face, different inbox", when: "24 Jun", msgs: [
+        { k: "chip", t: "24/06/2026" }, { k: "out", t: "This identity is for the shop.", at: "11:00" }, { k: "in", t: "Public face, different inbox.", at: "11:01" }, { k: "pill", t: "Incoming call", at: "11:08" }
+      ] },
+    "river.studio": { snip: "Drop the files here", when: "23 Jun", msgs: [{ k: "chip", t: "23/06/2026" }, { k: "in", t: "Drop the files here", at: "17:44" }, { k: "out", t: "Sent.", at: "17:45" }] },
+    "pixel.wave": { snip: "Outgoing call", when: "21 Jun", msgs: [{ k: "chip", t: "21/06/2026" }, { k: "pill", t: "Outgoing call", at: "14:02" }] },
+    "luna.eth": { snip: "Hi", when: "18 Jun", msgs: [{ k: "chip", t: "18/06/2026" }, { k: "in", t: "Hi", at: "09:11" }, { k: "out", t: "Hey", at: "09:12" }] }
+  },
+  "lasereclipse110282": {
+    "vigilantviper243266": { snip: "Still encrypted on a handle", when: "25 Jun", msgs: [
+        { k: "chip", t: "25/06/2026" }, { k: "out", t: "Nobody gets a number from this.", at: "20:02" }, { k: "in", t: "Still encrypted on a handle.", at: "20:03" }, { k: "pill", t: "Incoming call", at: "20:10" }
+      ] },
+    "echo.wave": { snip: "Later", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "in", t: "Later", at: "23:40" }, { k: "out", t: "Ok", at: "23:41" }] },
+    "luna.eth": { snip: "Incoming call", when: "20 Jun", msgs: [{ k: "chip", t: "20/06/2026" }, { k: "pill", t: "Incoming call", at: "12:18" }] },
+    "nova.identity": { snip: "Shop is live", when: "18 Jun", msgs: [{ k: "chip", t: "18/06/2026" }, { k: "in", t: "Shop is live", at: "10:05" }, { k: "out", t: "Nice", at: "10:06" }] }
+  },
+  "friends.identity": {
+    "hello@mail.com": { snip: "This one is just friends", when: "25 Jun", msgs: [
+        { k: "chip", t: "25/06/2026" }, { k: "in", t: "This one is just friends.", at: "19:20" }, { k: "out", t: "Work stays on the other identity.", at: "19:21" }, { k: "pill", t: "Outgoing call", at: "19:30" }
+      ] },
+    "shop.identity": { snip: "Hii", when: "24 Jun", msgs: [{ k: "chip", t: "24/06/2026" }, { k: "in", t: "Hii", at: "18:02" }, { k: "out", t: "Heyyy", at: "18:03" }] },
+    "echo.wave": { snip: "Yo", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "in", t: "Yo", at: "21:11" }] },
+    "kai.eth": { snip: "See you tonight", when: "21 Jun", msgs: [{ k: "chip", t: "21/06/2026" }, { k: "in", t: "See you tonight", at: "16:40" }, { k: "out", t: "On my way.", at: "16:41" }] },
+    "river.studio": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "11:02" }] }
+  }
 };
+function box(){ if (!inbox[me]) inbox[me] = {}; return inbox[me]; }
 const replies = [
   "Call me as you@mail.com — no number.",
   "Encrypted end to end.",
@@ -143,7 +170,7 @@ function openDrawer(on){
   if (on) renderDrawer();
 }
 function renderChats(){
-  const rows = Object.entries(chats).map(([id,c])=>`
+  const rows = Object.entries(box()).map(([id,c])=>`
     <div class="row" data-open="${id}">
       <div class="avatar">${initial(id)}</div>
       <div><div class="name">${id}</div><div class="snip">${c.snip}</div></div>
@@ -153,7 +180,7 @@ function renderChats(){
   $("view").innerHTML = idbar()+`<div class="list">${rows}</div>`+tabs();
 }
 function renderThread(){
-  const c = chats[threadId];
+  const c = box()[threadId];
   const msgs = c.msgs.map(m=>{
     if (m.k==="chip") return `<div class="chip">${m.t}</div>`;
     if (m.k==="pill") return `<div class="pill">${m.t}<small>${m.at||""}</small></div>`;
@@ -213,7 +240,7 @@ function renderCall(){
 }
 function hang(){
   if (callIv) clearInterval(callIv);
-  if (callFor && chats[callFor]) chats[callFor].msgs.push({k:"pill", t:"Outgoing call", at: now()});
+  if (callFor && box()[callFor]) box()[callFor].msgs.push({k:"pill", t:"Outgoing call", at: now()});
   callFor = null; screen = threadId ? "thread" : (tab==="dialer"?"dialer":"chats");
   render(); $("cta").classList.add("on");
   setTimeout(()=> $("cta").classList.remove("on"), 8000);
@@ -229,7 +256,7 @@ document.getElementById("app").addEventListener("click", e=>{
   const ham = e.target.closest("#ham"); if (ham) { openDrawer(true); return; }
   if (e.target.closest("#scrim")) { openDrawer(false); return; }
   const prod = e.target.closest(".prod");
-  if (prod && !e.target.closest(".copy")) { me = prod.dataset.id; openDrawer(false); render(); return; }
+  if (prod && !e.target.closest(".copy")) { me = prod.dataset.id; threadId = null; if (screen!=="dialer") { screen = "chats"; tab = "chats"; } openDrawer(false); render(); return; }
   const cp = e.target.closest("[data-copy]");
   if (cp) { navigator.clipboard && navigator.clipboard.writeText(cp.dataset.copy); return; }
   const tb = e.target.closest("[data-tab]");
@@ -245,7 +272,7 @@ document.getElementById("app").addEventListener("click", e=>{
   if (e.target.closest("[data-call-dial]")) { startCall(dial || "you@mail.com"); return; }
   if (e.target.closest("[data-msg-dial]")) {
     const id = dial || "you@mail.com";
-    if (!chats[id]) chats[id] = { snip: "New chat", when: "now", msgs: [{k:"chip", t: now()}] };
+    if (!box()[id]) box()[id] = { snip: "New chat", when: "now", msgs: [{k:"chip", t: now()}] };
     threadId = id; tab="chats"; screen="thread"; render(); return;
   }
   if (e.target.closest("#hang") || e.target.closest("#min")) { hang(); return; }
@@ -257,14 +284,14 @@ document.getElementById("app").addEventListener("submit", e=>{
   e.preventDefault();
   const input = e.target.m;
   const text = (input.value||"").trim(); if (!text) return;
-  chats[threadId].msgs.push({k:"out", t:text, at: now()});
-  chats[threadId].snip = text;
+  box()[threadId].msgs.push({k:"out", t:text, at: now()});
+  box()[threadId].snip = text;
   input.value = "";
   renderThread();
   setTimeout(()=>{
     const r = replies[Math.floor(Math.random()*replies.length)];
-    chats[threadId].msgs.push({k:"in", t:r, at: now()});
-    chats[threadId].snip = r;
+    box()[threadId].msgs.push({k:"in", t:r, at: now()});
+    box()[threadId].snip = r;
     renderThread();
   }, 700);
 });
