@@ -2,7 +2,617 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Arnacon — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --ink: #f4f1fb;
+      --muted: #9aa3b8;
+      --line: rgba(255,255,255,.08);
+      --app: #0d0b12;
+      --app-2: #111016;
+      --card: #1a1820;
+      --violet: #8B5CF6;
+      --violet-2: #A855F7;
+      --magenta: #D946A6;
+      --green: #1E7A3C;
+      --red: #F03A2F;
+      --grey: #8a8a94;
+      --ios: https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(900px 500px at 80% -10%, rgba(139,92,246,.22), transparent 60%),
+        radial-gradient(700px 400px at 10% 20%, rgba(59,130,246,.08), transparent 55%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .preview {
+      position: relative; z-index: 80; text-align: center;
+      font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+      padding: 8px 12px; background: #1a1030; color: #c4b5fd;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    nav {
+      position: sticky; top: 14px; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      width: min(1180px, calc(100% - 40px)); margin: 14px auto 0;
+      padding: 10px 12px 10px 18px;
+      background: rgba(10,14,24,.62);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      backdrop-filter: blur(16px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: -.02em; }
+    .mark {
+      width: 28px; height: 28px; border-radius: 8px;
+      object-fit: cover; background: none;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.12);
+    }
+    .nav-cta { display: flex; align-items: center; gap: 8px; }
+    .ghost, .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 600; font-size: 14px;
+      white-space: nowrap;
+    }
+    .ghost { color: var(--muted); }
+    .ghost:hover { color: white; }
+    .btn {
+      color: white;
+      background: linear-gradient(180deg, #a78bfa, #7c3aed);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 10px 30px rgba(139,92,246,.45);
+    }
+    .stage {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 28px 16px 48px;
+    }
+    .stage-copy { text-align: center; max-width: 36ch; margin-bottom: 22px; }
+    .stage-copy h1 { font-size: 28px; letter-spacing: -.03em; font-weight: 650; }
+    .stage-copy p { color: var(--muted); margin-top: 8px; font-size: 15px; }
+    .stores { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+    .stores img { height: 40px; }
+    .phone-wrap {
+      position: relative;
+      width: min(390px, 100%);
+      height: min(812px, calc(100dvh - 220px));
+      min-height: 640px;
+    }
+    .phone {
+      width: 100%; height: 100%;
+      border-radius: 46px;
+      background: #000;
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 50px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(139,92,246,.2), inset 0 0 0 10px #05070d;
+      overflow: hidden; position: relative;
+    }
+    .island {
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 118px; height: 34px; background: #000; border-radius: 20px; z-index: 8; pointer-events: none;
+    }
+    #view { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .app {
+      position: absolute; inset: 10px; border-radius: 36px;
+      background: var(--app); overflow: hidden;
+      display: flex; flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Instrument Sans", sans-serif;
+      color: #fff;
+    }
+    .statusbar {
+      height: 48px; display: flex; align-items: flex-end; justify-content: space-between;
+      padding: 0 22px 8px; font-size: 14px; font-weight: 600; flex-shrink: 0;
+    }
+    .sb-right { display: flex; gap: 6px; align-items: center; opacity: .9; font-size: 11px; }
+    .idbar {
+      display: flex; align-items: center; justify-content: center;
+      padding: 4px 16px 10px; position: relative; flex-shrink: 0;
+    }
+    .idbar .ident {
+      color: var(--violet-2); font-weight: 600; font-size: 16px;
+      max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ham {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(139,92,246,.45);
+      background: rgba(26,24,32,.7);
+      display: grid; place-items: center; cursor: pointer;
+    }
+    .ham span, .ham span::before, .ham span::after {
+      display: block; width: 14px; height: 1.5px; background: var(--violet-2); border-radius: 2px; position: relative;
+    }
+    .ham span::before, .ham span::after { content: ""; position: absolute; left: 0; }
+    .ham span::before { top: -5px; }
+    .ham span::after { top: 5px; }
+    .thread-nav {
+      display: flex; align-items: center; justify-content: center;
+      padding: 6px 16px 10px; position: relative; flex-shrink: 0;
+    }
+    .thread-nav .who { font-weight: 600; font-size: 16px; }
+    .icon-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 36px; height: 36px; display: grid; place-items: center;
+      background: none; border: 0; color: #fff; cursor: pointer;
+    }
+    .icon-btn.left { left: 8px; }
+    .icon-btn.right { right: 8px; }
+    .list { flex: 1; overflow-y: auto; padding: 4px 0 8px; }
+    .row {
+      display: grid; grid-template-columns: 46px 1fr auto 40px;
+      gap: 10px; align-items: center;
+      padding: 10px 16px; cursor: pointer;
+    }
+    .row:active { background: rgba(255,255,255,.04); }
+    .avatar {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--violet); color: #fff;
+      display: grid; place-items: center; font-weight: 700; font-size: 20px;
+    }
+    .row .name { font-weight: 650; font-size: 15px; }
+    .row .snip { color: var(--grey); font-size: 13px; margin-top: 2px; }
+    .row .when { color: var(--grey); font-size: 12px; }
+    .call-mini {
+      width: 34px; height: 34px; border-radius: 10px; background: var(--card);
+      display: grid; place-items: center; color: var(--violet-2); border: 0; cursor: pointer;
+    }
+    .tabs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding: 8px 0 calc(10px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: var(--app-2); flex-shrink: 0;
+    }
+    .tab {
+      background: none; border: 0; color: var(--grey);
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600; cursor: pointer;
+    }
+    .tab.on { color: var(--violet-2); }
+    .thread { flex: 1; overflow-y: auto; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 10px; }
+    .chip {
+      align-self: center; background: var(--card); color: var(--grey);
+      font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    }
+    .pill {
+      align-self: center; background: var(--card); color: #c4b5fd;
+      font-size: 12px; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(139,92,246,.25);
+    }
+    .pill small { display: block; text-align: center; color: var(--grey); font-size: 10px; margin-top: 2px; border: 0; }
+    .bubble { max-width: 78%; padding: 10px 12px 18px; border-radius: 16px; font-size: 15px; position: relative; line-height: 1.35; }
+    .bubble .from { color: var(--violet-2); font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+    .bubble .t { position: absolute; right: 10px; bottom: 4px; font-size: 10px; color: rgba(255,255,255,.55); }
+    .out { align-self: flex-end; background: linear-gradient(180deg, #A855F7, #8B5CF6); }
+    .in { align-self: flex-start; background: var(--card); }
+    .composer {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
+      background: var(--app); flex-shrink: 0;
+    }
+    .cam, .send {
+      width: 40px; height: 40px; border: 0; cursor: pointer; color: #fff;
+      background: var(--violet); display: grid; place-items: center; flex-shrink: 0;
+    }
+    .cam { border-radius: 12px; }
+    .send { border-radius: 50%; }
+    .composer input {
+      flex: 1; height: 40px; border-radius: 999px; border: 0;
+      background: var(--card); color: #fff; padding: 0 16px; font-size: 15px; outline: none;
+    }
+    .composer input::placeholder { color: var(--grey); }
+    .dialer { flex: 1; display: flex; flex-direction: column; padding: 8px 28px 12px; }
+    .num-field { text-align: center; margin: 8px 0 18px; min-height: 48px; }
+    .num-field .ph { color: var(--grey); font-size: 22px; }
+    .num-field .val { font-size: 28px; font-weight: 600; letter-spacing: .02em; }
+    .num-field .under { width: 88px; height: 2px; background: var(--violet); margin: 8px auto 0; border-radius: 2px; }
+    .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; flex: 1; }
+    .key {
+      background: var(--card); border: 1px solid rgba(139,92,246,.28);
+      border-radius: 16px; color: #fff; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 58px;
+    }
+    .key b { font-size: 26px; font-weight: 500; line-height: 1; }
+    .key span { font-size: 10px; color: var(--grey); letter-spacing: .12em; margin-top: 4px; }
+    .dial-actions {
+      display: grid; grid-template-columns: 48px 1fr 48px; gap: 16px;
+      align-items: center; margin: 16px 8px 4px;
+    }
+    .round {
+      width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+      background: var(--violet); color: #fff; display: grid; place-items: center;
+    }
+    .call-go {
+      height: 56px; border-radius: 999px; border: 0; cursor: pointer;
+      background: var(--green); color: #fff; display: grid; place-items: center;
+    }
+    .call {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      background: radial-gradient(circle at 50% 28%, rgba(139,92,246,.35), transparent 55%), var(--app);
+      padding: 8px 20px 28px;
+    }
+    .min {
+      align-self: flex-start; background: var(--card); border: 0; color: #fff;
+      border-radius: 999px; padding: 8px 14px; font-size: 13px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .call-top {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      margin: 16px 0 8px; font-weight: 650;
+    }
+    .active {
+      border: 1px solid var(--green); color: #4ade80; border-radius: 999px;
+      padding: 4px 10px; font-size: 12px; font-weight: 650;
+    }
+    .call-av {
+      width: 112px; height: 112px; border-radius: 50%; background: var(--card);
+      display: grid; place-items: center; font-size: 48px; font-weight: 600; margin-top: 36px;
+    }
+    .call-id { font-size: 26px; font-weight: 650; margin-top: 18px; letter-spacing: -.02em; text-align: center; }
+    .timer { color: var(--grey); margin-top: 6px; font-size: 16px; }
+    .call-ctrls { display: flex; gap: 28px; margin-top: auto; margin-bottom: 28px; }
+    .ctrl { background: none; border: 0; color: var(--grey); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; }
+    .ctrl i {
+      width: 62px; height: 62px; border-radius: 50%; background: rgba(26,24,32,.85);
+      display: grid; place-items: center; color: #fff;
+    }
+    .ctrl.on i { background: #fff; color: #111; }
+    .hang {
+      width: 74px; height: 74px; border-radius: 50%; border: 0; background: var(--red);
+      color: #fff; display: grid; place-items: center; cursor: pointer;
+    }
+    .scrim {
+      position: absolute; inset: 0; background: rgba(0,0,0,.45); z-index: 12;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .scrim.on { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: absolute; inset: 0 auto 0 0; width: 82%; z-index: 13;
+      background: var(--app-2); transform: translateX(-105%); transition: transform .25s ease;
+      display: flex; flex-direction: column; padding: 52px 16px 18px;
+      box-shadow: 20px 0 40px rgba(0,0,0,.4);
+    }
+    .drawer.on { transform: translateX(0); }
+    .d-av {
+      width: 72px; height: 72px; border-radius: 50%; margin: 0 auto;
+      background: linear-gradient(160deg, var(--magenta), var(--violet));
+      display: grid; place-items: center; font-size: 24px; font-weight: 700;
+    }
+    .d-id { text-align: center; font-size: 18px; font-weight: 650; margin-top: 12px; word-break: break-all; }
+    .d-active {
+      display: flex; align-items: center; gap: 6px; margin: 10px auto 18px;
+      background: var(--card); border-radius: 999px; padding: 4px 10px; font-size: 12px; width: max-content;
+    }
+    .d-active i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+    .label { color: var(--grey); font-size: 11px; letter-spacing: .14em; margin: 8px 4px; }
+    .prod {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 10px; border-radius: 14px; cursor: pointer; margin-bottom: 4px;
+    }
+    .prod.on { background: var(--card); }
+    .prod .pa {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(160deg, var(--magenta), var(--violet));
+      display: grid; place-items: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .prod span { flex: 1; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .copy { background: none; border: 0; color: var(--grey); cursor: pointer; }
+    .d-foot {
+      margin-top: auto; display: flex; justify-content: space-around; padding-top: 12px;
+    }
+    .d-foot button {
+      background: none; border: 0; color: var(--grey); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px;
+    }
+    .d-foot i {
+      width: 44px; height: 44px; border-radius: 50%; background: var(--violet);
+      color: #fff; display: grid; place-items: center;
+    }
+    .cta-pop {
+      position: absolute; left: 12px; right: 12px; bottom: 18px; z-index: 14;
+      background: var(--card); border: 1px solid rgba(139,92,246,.35);
+      border-radius: 18px; padding: 14px; text-align: center;
+      display: none;
+    }
+    .cta-pop.on { display: block; }
+    .cta-pop p { font-size: 14px; margin-bottom: 10px; }
+    .mob-get {
+      display: none; position: relative; z-index: 70;
+      padding: 8px 12px; background: #120c1c;
+      border-bottom: 1px solid var(--line);
+      align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .mob-get span { font-size: 13px; color: #c4b5fd; }
+    .mob-get a { height: 32px; padding: 0 12px; font-size: 13px; }
+    @media (max-width: 900px) {
+      nav, .stage-copy { display: none; }
+      .mob-get { display: flex; }
+      .stage { padding: 0; }
+      .phone-wrap { width: 100%; height: calc(100dvh - 78px); min-height: 0; }
+      .phone { border-radius: 0; border: 0; box-shadow: none; inset: auto; }
+      #view { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .app { inset: 0; border-radius: 0; }
+      .island { display: none; }
+    }
+  </style>
 </head>
-<body>DEMO_REAL_CONTENT_FROM_DISK</body>
+<body>
+  <div class="preview">Preview · not arnacon.com</div>
+  <div class="mob-get">
+    <span>Get the real app</span>
+    <a class="btn store-link" href="https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB">Get the app</a>
+  </div>
+  <nav>
+    <a class="brand" href="index.html"><img class="mark" src="data:image/webp;base64,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" alt="Arnacon" />Arnacon</a>
+    <div class="nav-cta">
+      <a class="ghost" href="index.html">Home</a>
+      <a class="btn store-link" href="https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB">Download</a>
+    </div>
+  </nav>
+  <div class="stage">
+    <div class="stage-copy">
+      <h1>The app, in your browser.</h1>
+      <p>Identities. Encrypted calls. No number required. Then take it with you.</p>
+      <div class="stores" id="stores">
+        <a href="https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB"><img alt="Download on the App Store" src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" /></a>
+        <a href="https://play.google.com/store/apps/details?id=com.arnacon.app"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" /></a>
+      </div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="app" id="app">
+          <div class="statusbar"><span id="clock">9:41</span><span class="sb-right">5G ▮▮▮</span></div>
+          <div id="view"></div>
+          <div class="scrim" id="scrim"></div>
+          <aside class="drawer" id="drawer"></aside>
+          <div class="cta-pop" id="cta">
+            <p>Get the real app — identities, encrypted calls, no number.</p>
+            <a class="btn store-link" href="https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB">Get the app</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const IOS = "https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB";
+    const AND = "https://play.google.com/store/apps/details?id=com.arnacon.app";
+    const ua = navigator.userAgent || "";
+    const store = /iPhone|iPad|iPod/i.test(ua) ? IOS : /Android/i.test(ua) ? AND : null;
+    document.querySelectorAll(".store-link").forEach(a => { if (store) a.href = store; });
+    const $ = id => document.getElementById(id);
+    const products = [
+      { id: "you@mail.com", kind: "email" },
+      { id: "matan.cellact.eth", kind: "ens" },
+      { id: "972557140063", kind: "number" },
+      { id: "vigilantviper243266", kind: "handle" }
+    ];
+    const chats = {
+      "matan.cellact.eth": {
+        snip: "I am loving Arnacon so much", when: "24 Jun",
+        msgs: [
+          { k: "chip", t: "24/06/2026" },
+          { k: "out", t: "Hey how are you?", at: "14:02" },
+          { k: "in", t: "Great, and you?", at: "14:03" },
+          { k: "pill", t: "Incoming call", at: "14:05" },
+          { k: "pill", t: "Outgoing call", at: "14:05" },
+          { k: "out", t: "I am loving Arnacon so much", at: "14:07" },
+          { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:07" }
+        ]
+      },
+      "972557140059": {
+        snip: "Great, and you?", when: "24 Jun",
+        msgs: [
+          { k: "chip", t: "24/06/2026" },
+          { k: "pill", t: "Outgoing call", at: "11:04" },
+          { k: "out", t: "Call me as an identity. No number.", at: "11:06" },
+          { k: "in", t: "Encrypted the whole way.", at: "11:06" }
+        ]
+      },
+      "*9225": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "09:12" }] },
+      "northline.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "16:40" }] }
+    };
+    const replies = [
+      "Call me as you@mail.com — no number.",
+      "Encrypted end to end.",
+      "Switch identity whenever the context changes."
+    ];
+    let me = products[0].id;
+    let tab = "chats";
+    let screen = "chats";
+    let threadId = null;
+    let dial = "";
+    let callFor = null;
+    let callT = 0, callIv = null, muted = false, speaker = false;
+    const svg = {
+      phone: '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.9 5.1 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 7a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .56 3.5 1 1 0 0 1-.24 1z"/></svg>',
+      back: '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>',
+      cam: '<svg width="18" height="18" fill="none" stroke="#fff" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="3"/><circle cx="12" cy="13.5" r="3.2"/><path d="M8 7l1.4-2h5.2L16 7"/></svg>',
+      send: '<svg width="16" height="16" fill="#fff" viewBox="0 0 24 24"><path d="M3 11.5 21 3l-7.2 18-2.6-7.2L3 11.5z"/></svg>',
+      chat: '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M5 18.5 4 22l3.6-1.4A9 9 0 1 0 5 18.5z"/></svg>',
+      grid: '<svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>',
+      plane: '<svg width="16" height="16" fill="#fff" viewBox="0 0 24 24"><path d="M3 11.5 21 3l-7.2 18-2.6-7.2L3 11.5z"/></svg>',
+      del: '<svg width="18" height="18" fill="none" stroke="#fff" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 8v8M8 10l4 6 4-6"/><path d="M4 7h13l3 5-3 5H4l3-5-3-5z"/></svg>',
+      bs: '<svg width="20" height="20" fill="none" stroke="#fff" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10 6H20a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H10L4 12l6-6z"/><path d="m13 9 5 6M18 9l-5 6"/></svg>',
+      mic: '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg>',
+      spk: '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.5 7a7 7 0 0 1 0 10"/></svg>',
+      hang: '<svg width="28" height="28" fill="#fff" viewBox="0 0 24 24"><path d="M4 15c5 4 11 4 16 0l-2.2-2.2a1 1 0 0 0-1-.24 11 11 0 0 1-9.6 0 1 1 0 0 0-1 .24L4 15z"/></svg>',
+      copy: '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V4h12"/></svg>',
+      gear: '<svg width="18" height="18" fill="none" stroke="#fff" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>',
+      down: '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>'
+    };
+    function initial(s){ s=String(s); return /[0-9]/.test(s[0]) ? s[0] : (s[0]==="*" ? "*" : s[0].toUpperCase()); }
+    function now(){ const d=new Date(); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+    $("clock").textContent = now();
+    setInterval(()=> $("clock").textContent = now(), 30000);
+    function tabs(){
+      return `<nav class="tabs">
+        <button class="tab ${tab==="chats"?"on":""}" data-tab="chats">${svg.chat}<span>Chats</span></button>
+        <button class="tab ${tab==="dialer"?"on":""}" data-tab="dialer">${svg.grid}<span>Dialer</span></button>
+      </nav>`;
+    }
+    function idbar(){
+      return `<div class="idbar"><button class="ham" id="ham" aria-label="Identities"><span></span></button><div class="ident">${me}</div></div>`;
+    }
+    function renderDrawer(){
+      $("drawer").innerHTML = `
+        <div class="d-av">${initial(me)}${/[0-9]/.test(me[1]||"")?me[1]:""}</div>
+        <div class="d-id">${me}</div>
+        <div class="d-active"><i></i> Active</div>
+        <div class="label">YOUR PRODUCTS</div>
+        ${products.map(p=>`<div class="prod ${p.id===me?"on":""}" data-id="${p.id}">
+          <div class="pa">${initial(p.id)}</div><span>${p.id}</span>
+          <button class="copy" data-copy="${p.id}" aria-label="Copy">${svg.copy}</button>
+        </div>`).join("")}
+        <div class="d-foot">
+          <button type="button"><i>${svg.gear}</i>Settings</button>
+          <button type="button"><i>${svg.cam}</i>Scan</button>
+        </div>`;
+    }
+    function openDrawer(on){
+      $("drawer").classList.toggle("on", on);
+      $("scrim").classList.toggle("on", on);
+      if (on) renderDrawer();
+    }
+    function renderChats(){
+      const rows = Object.entries(chats).map(([id,c])=>`
+        <div class="row" data-open="${id}">
+          <div class="avatar">${initial(id)}</div>
+          <div><div class="name">${id}</div><div class="snip">${c.snip}</div></div>
+          <div class="when">${c.when}</div>
+          <button class="call-mini" data-call="${id}" aria-label="Call">${svg.phone}</button>
+        </div>`).join("");
+      $("view").innerHTML = idbar()+`<div class="list">${rows}</div>`+tabs();
+    }
+    function renderThread(){
+      const c = chats[threadId];
+      const msgs = c.msgs.map(m=>{
+        if (m.k==="chip") return `<div class="chip">${m.t}</div>`;
+        if (m.k==="pill") return `<div class="pill">${m.t}<small>${m.at||""}</small></div>`;
+        if (m.k==="out") return `<div class="bubble out">${m.t}<span class="t">${m.at}</span></div>`;
+        return `<div class="bubble in"><div class="from">${threadId}</div>${m.t}<span class="t">${m.at}</span></div>`;
+      }).join("");
+      $("view").innerHTML = idbar()+`
+        <div class="thread-nav">
+          <button class="icon-btn left" id="back">${svg.back}</button>
+          <div class="who">${threadId}</div>
+          <button class="icon-btn right" data-call="${threadId}">${svg.phone}</button>
+        </div>
+        <div class="thread" id="thread">${msgs}</div>
+        <form class="composer" id="composer">
+          <button class="cam" type="button" aria-label="Camera">${svg.cam}</button>
+          <input name="m" placeholder="Type a message..." autocomplete="off" />
+          <button class="send" type="submit" aria-label="Send">${svg.send}</button>
+        </form>`;
+      const th = $("thread"); th.scrollTop = th.scrollHeight;
+    }
+    function renderDialer(){
+      const keys = [["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
+      $("view").innerHTML = idbar()+`
+        <div class="dialer">
+          <div class="num-field">${dial?`<div class="val">${dial}</div>`:`<div class="ph">Enter number</div>`}<div class="under"></div></div>
+          <div class="keys">${keys.map(([n,l])=>`<button class="key" data-key="${n}"><b>${n}</b>${l?`<span>${l}</span>`:""}</button>`).join("")}</div>
+          <div class="dial-actions">
+            <button class="round" data-msg-dial aria-label="Message">${svg.plane}</button>
+            <button class="call-go" data-call-dial aria-label="Call">${svg.phone}</button>
+            <button class="round" data-bs aria-label="Delete">${svg.bs}</button>
+          </div>
+        </div>`+tabs();
+    }
+    function startCall(who){
+      callFor = who; callT = 0; muted = false; speaker = false;
+      screen = "call";
+      if (callIv) clearInterval(callIv);
+      callIv = setInterval(()=>{ callT++; const el=document.getElementById("timer"); if(el) el.textContent = fmt(callT); }, 1000);
+      renderCall();
+    }
+    function fmt(s){ return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
+    function renderCall(){
+      $("view").innerHTML = `
+        <div class="call">
+          <button class="min" id="min">${svg.down} Minimize</button>
+          <div class="call-top"><span>${callFor}</span><span class="active">Active</span></div>
+          <div class="call-av">${initial(callFor)}</div>
+          <div class="call-id">${callFor}</div>
+          <div class="timer" id="timer">${fmt(callT)}</div>
+          <div class="call-ctrls">
+            <button class="ctrl" data-noop><i>${svg.grid}</i>Keypad</button>
+            <button class="ctrl ${muted?"on":""}" id="mute"><i>${svg.mic}</i>Mute</button>
+            <button class="ctrl ${speaker?"on":""}" id="spk"><i>${svg.spk}</i>Speaker</button>
+          </div>
+          <button class="hang" id="hang" aria-label="Hang up">${svg.hang}</button>
+        </div>`;
+    }
+    function hang(){
+      if (callIv) clearInterval(callIv);
+      if (callFor && chats[callFor]) chats[callFor].msgs.push({k:"pill", t:"Outgoing call", at: now()});
+      callFor = null; screen = threadId ? "thread" : (tab==="dialer"?"dialer":"chats");
+      render(); $("cta").classList.add("on");
+      setTimeout(()=> $("cta").classList.remove("on"), 8000);
+    }
+    function render(){
+      openDrawer(false);
+      if (screen==="call") return renderCall();
+      if (screen==="thread") return renderThread();
+      if (tab==="dialer") return renderDialer();
+      renderChats();
+    }
+    document.getElementById("app").addEventListener("click", e=>{
+      const ham = e.target.closest("#ham"); if (ham) { openDrawer(true); return; }
+      if (e.target.closest("#scrim")) { openDrawer(false); return; }
+      const prod = e.target.closest(".prod");
+      if (prod && !e.target.closest(".copy")) { me = prod.dataset.id; openDrawer(false); render(); return; }
+      const cp = e.target.closest("[data-copy]");
+      if (cp) { navigator.clipboard && navigator.clipboard.writeText(cp.dataset.copy); return; }
+      const tb = e.target.closest("[data-tab]");
+      if (tb) { tab = tb.dataset.tab; screen = tab; threadId=null; render(); return; }
+      const call = e.target.closest("[data-call]");
+      if (call) { startCall(call.dataset.call); return; }
+      const open = e.target.closest("[data-open]");
+      if (open && !e.target.closest("[data-call]")) { threadId = open.dataset.open; screen="thread"; tab="chats"; render(); return; }
+      if (e.target.closest("#back")) { screen="chats"; threadId=null; render(); return; }
+      const key = e.target.closest("[data-key]");
+      if (key) { dial += key.dataset.key; renderDialer(); return; }
+      if (e.target.closest("[data-bs]")) { dial = dial.slice(0,-1); renderDialer(); return; }
+      if (e.target.closest("[data-call-dial]")) { startCall(dial || "you@mail.com"); return; }
+      if (e.target.closest("[data-msg-dial]")) {
+        const id = dial || "you@mail.com";
+        if (!chats[id]) chats[id] = { snip: "New chat", when: "now", msgs: [{k:"chip", t: now()}] };
+        threadId = id; tab="chats"; screen="thread"; render(); return;
+      }
+      if (e.target.closest("#hang") || e.target.closest("#min")) { hang(); return; }
+      if (e.target.closest("#mute")) { muted=!muted; renderCall(); return; }
+      if (e.target.closest("#spk")) { speaker=!speaker; renderCall(); return; }
+    });
+    document.getElementById("app").addEventListener("submit", e=>{
+      if (e.target.id!=="composer") return;
+      e.preventDefault();
+      const input = e.target.m;
+      const text = (input.value||"").trim(); if (!text) return;
+      chats[threadId].msgs.push({k:"out", t:text, at: now()});
+      chats[threadId].snip = text;
+      input.value = "";
+      renderThread();
+      setTimeout(()=>{
+        const r = replies[Math.floor(Math.random()*replies.length)];
+        chats[threadId].msgs.push({k:"in", t:r, at: now()});
+        chats[threadId].snip = r;
+        renderThread();
+      }, 700);
+    });
+    render();
+  </script>
+</body>
 </html>
