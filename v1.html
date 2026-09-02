@@ -36,13 +36,11 @@ nav img{width:28px;height:28px;border-radius:7px}
 .band{background:var(--ink);color:var(--off)}
 .wrap{max-width:72rem;margin:0 auto;padding:80px 20px}
 .beats{display:grid;gap:48px}
-.rule{border-color:rgba(0,0,0,.1)}
 .track-wrap{overflow:hidden;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1)}
 .track{display:flex;width:max-content;animation:marquee 32s linear infinite;padding:20px 0}
 .pi{min-width:11rem;margin:0 32px}
 .pi b{display:block;font-weight:400;font-size:14px}.pi span{font-size:12px;color:#0006}
 .stats{display:grid;gap:32px}
-.prop{display:grid;gap:12px;padding:28px 0;border-top:1px solid rgba(0,0,0,.1)}
 .phone{width:260px;border-radius:2rem;border:1px solid rgba(0,0,0,.1);background:var(--ink);padding:12px;color:var(--off);box-shadow:0 0 0 1px rgba(14,118,255,.25),0 24px 60px rgba(7,9,13,.18)}
 .screen{border-radius:1.4rem;background:#11141a;overflow:hidden;padding:16px 16px 24px}
 .row{display:flex;justify-content:space-between;border:1px solid #fff1;padding:10px 12px;font-size:12px;margin-top:8px}
@@ -59,7 +57,6 @@ nav img{width:28px;height:28px;border-radius:7px}
 .sl-btn__label>span,.sl-btn__icon>span{display:flex;align-items:center;justify-content:center;height:34px;flex-shrink:0}
 .sl-btn__icon{width:32px;background:var(--accent);color:var(--off)}
 .sl-btn--sec .sl-btn__label{background:#eeeef01a;color:var(--off);backdrop-filter:blur(20px)}
-.sl-btn--on .sl-btn__label{background:#000;color:var(--off)}
 .sl-letter{display:inline-block;opacity:0;transform:translateY(.12em);transition:opacity .45s var(--ease),transform .5s var(--ease)}
 .is-in .sl-letter{opacity:1;transform:none}
 @keyframes drift{to{transform:translate3d(-36px,22px,0) scale(1.08)}}
@@ -69,7 +66,6 @@ nav img{width:28px;height:28px;border-radius:7px}
 .foot{grid-template-columns:1fr 1.4fr;align-items:end}
 .beats{grid-template-columns:1fr 1fr 1fr}
 .stats{grid-template-columns:repeat(4,1fr)}
-.prop{grid-template-columns:140px 1fr 1.2fr;gap:24px}
 .app{grid-template-columns:1fr 1fr}
 .sl-btn:hover .sl-btn__label>span,.sl-btn:hover .sl-btn__icon>span{transform:translateY(-100%)}
 .sl-btn:hover .sl-btn__label{transform:translateX(34px)}
@@ -82,6 +78,7 @@ nav img{width:28px;height:28px;border-radius:7px}
 <nav>
 <a href="versions.html" class="label" style="display:flex;gap:10px;align-items:center"><img src="arnacon-logo.svg?v=4" alt="">Arnacon · Studio</a>
 <div class="nav-r">
+<a class="label" href="privacy.html" style="opacity:.7">Privacy</a>
 <a class="label" href="demo.html?v=5" style="opacity:.7">Demo</a>
 <a class="sl-btn sl-btn--primary" href="#dl" onclick="goStore();return false"><span class="sl-btn__label"><span>Download</span><span>Download</span></span><span class="sl-btn__icon"><span>↓</span><span>↓</span></span></a>
 </div>
@@ -99,7 +96,7 @@ nav img{width:28px;height:28px;border-radius:7px}
 <div class="foot">
 <p class="label" style="color:#fff8">Live today · no phone number</p>
 <div>
-<p class="blurb">Download Arnacon. Talk as your email, or as a brand-new identity. We only enable. You bring the brand.</p>
+<p class="blurb">Download Arnacon. Talk as your email, or as a brand-new identity. You choose the privacy. We only enable. You bring the brand.</p>
 <p class="hon">Anyone can run their own version. They choose privacy and customers. Arnacon is the rail.</p>
 </div>
 </div>
@@ -151,20 +148,30 @@ nav img{width:28px;height:28px;border-radius:7px}
 </div></div>
 </div>
 </section>
+<section class="wrap">
+<p class="label" style="color:#0006">You choose the privacy</p>
+<h2 class="dg">Stay on the rail. Or open a door.</h2>
+<div class="beats" style="margin-top:40px">
+<div><p class="label" style="color:#0006">01</p><h3 class="dm">On Arnacon</h3><p style="color:#0009;line-height:1.55;font-size:15px">Email to identity. No number. This path does not go to WhatsApp. Meta is not invited.</p></div>
+<div><p class="label" style="color:#0006">02</p><h3 class="dm">The WhatsApp door</h3><p style="color:#0009;line-height:1.55;font-size:15px">EU. Both sides opt in. Then their terms apply. They may store metadata. We say it here, not at the maker.</p></div>
+<div><p class="label" style="color:#0006">03</p><h3 class="dm">Your version</h3><p style="color:#0009;line-height:1.55;font-size:15px">Anyone can run their own. They choose if the door exists. They choose the customers. You bring the brand.</p></div>
+</div>
+<p style="margin-top:28px"><a class="label" href="privacy.html" style="color:var(--accent)">Privacy policy →</a></p>
+</section>
 <section class="band">
 <div class="wrap">
 <h2 class="dg" style="max-width:20ch">Download. Talk. Then build under your name.</h2>
 <p style="max-width:28rem;color:#fffc;margin:16px 0 28px">Anyone can run their own version. They choose privacy and customers. Arnacon only enables.</p>
 <a class="sl-btn sl-btn--primary" href="#" onclick="goStore();return false"><span class="sl-btn__label"><span>Download Arnacon</span><span>Download Arnacon</span></span><span class="sl-btn__icon"><span>↓</span><span>↓</span></span></a>
-<p style="margin-top:40px"><a class="label" href="versions.html" style="color:#fff6">All five versions →</a></p>
+<p style="margin-top:40px"><a class="label" href="privacy.html" style="color:#fff6">Privacy</a> · <a class="label" href="versions.html" style="color:#fff6">All five versions →</a></p>
 </div>
 </section>
 </div>
 <script>
 function letters(el,text){var i=0,h='';for(var n=0;n<text.length;n++){var c=text[n];if(c==='\n'){h+='<br>';continue}if(c===' '){h+=' ';continue}h+='<span class="sl-letter" style="transition-delay:'+(i*0.028)+'s">'+c+'</span>';i++}el.innerHTML=h;requestAnimationFrame(function(){el.classList.add('is-in')})}
 letters(document.getElementById('t1'),'Call your email.');
-letters(document.getElementById('t2'),'Or a brand-new identity.');
-var items=[{n:'Email',u:'Address you own'},{n:'New identity',u:'Minted, not assigned'},{n:'ENS',u:'A name on-chain'},{n:'No number',u:'SIM is optional'},{n:'Your brand',u:'We only enable'},{n:'Open rail',u:'Anyone can run one'}];
+letters(document.getElementById('t2'),'Or a new identity. You choose the privacy.');
+var items=[{n:'Email',u:'Address you own'},{n:'New identity',u:'Minted, not assigned'},{n:'Privacy',u:'You choose it'},{n:'No number',u:'SIM is optional'},{n:'Your brand',u:'We only enable'},{n:'Open rail',u:'Anyone can run one'}];
 var t=document.getElementById('track');var html=items.concat(items).map(function(x){return '<div class="pi"><b>'+x.n+'</b><span>'+x.u+'</span></div>'}).join('');t.innerHTML=html;
 var IOS='https://apps.apple.com/nl/app/arnacon/id6504406464?l=en-GB',AND='https://play.google.com/store/apps/details?id=com.arnacon.app';
 function goStore(){var u=navigator.userAgent||'';location.href=/iPhone|iPad|iPod/i.test(u)?IOS:AND}
