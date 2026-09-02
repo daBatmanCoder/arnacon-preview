@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#fff7f1;--coral:#ff6b4a;--ink:#2a1c18;--ink-muted:rgba(42,28,24,.65);--glass:rgba(255,255,255,.92)}
+:root{--cream:#fff7f1;--coral:#ff6b4a;--coral-dark:#e5563d;--ink:#2a1c18;--ink-muted:rgba(42,28,24,.65);--glass:rgba(255,255,255,.92)}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
 body{margin:0;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
 a{color:var(--coral);text-decoration:none}a:hover{text-decoration:underline}
@@ -17,6 +17,8 @@ nav{position:sticky;top:12px;z-index:100;width:min(1120px,calc(100% - 24px));mar
 .nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--ink)}.nav-brand:hover{text-decoration:none}
 .nav-brand img{width:32px;height:32px;border-radius:10px}
 .nav-links{display:flex;align-items:center;gap:18px}.nav-links a{font-size:14px;font-weight:600;color:var(--ink-muted);transition:color .2s}.nav-links a:hover{color:var(--ink);text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--coral);color:#fff!important;border-radius:999px;padding:10px 18px;font-weight:600;font-size:14px}
+.btn:hover{text-decoration:none;background:var(--coral-dark)}
 main{width:min(760px,calc(100% - 40px));margin:0 auto;padding:80px 0 60px}
 h1{font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:-.04em;line-height:1.05;font-weight:700;margin:12px 0 16px}
 .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-weight:600;margin-bottom:12px;display:block}
@@ -28,7 +30,7 @@ ul{padding-left:1.4em;margin-bottom:20px}
 footer{padding:40px 0;border-top:2px solid rgba(42,28,24,.08);margin-top:60px}
 .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;width:min(1120px,calc(100% - 40px));margin:0 auto}
 .footer-links{display:flex;gap:20px;flex-wrap:wrap}.footer-links a{font-size:14px;color:var(--ink-muted)}.footer-links a:hover{color:var(--ink);text-decoration:none}
-@media(max-width:900px){.nav-links a:not(:last-child){display:none}main{width:calc(100% - 32px)}}
+@media(max-width:900px){.nav-links a:not(.btn){display:none}main{width:calc(100% - 32px)}}
 </style>
 </head>
 <body>
@@ -38,8 +40,10 @@ footer{padding:40px 0;border-top:2px solid rgba(42,28,24,.08);margin-top:60px}
     <span>Arnacon</span>
   </a>
   <div class="nav-links">
-    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy</a>
     <a href="blog.html">Blog</a>
+    <a href="demo.html">Demo</a>
+    <a class="btn" href="index.html#download">Download</a>
   </div>
 </nav>
 <main>
@@ -96,6 +100,7 @@ footer{padding:40px 0;border-top:2px solid rgba(42,28,24,.08);margin-top:60px}
     <span style="color:var(--ink-muted)">© 2026 Arnacon</span>
     <div class="footer-links">
       <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
       <a href="privacy.html">Privacy</a>
       <a href="https://www.arnacon.com/tandc">Terms</a>
       <a href="demo.html">Demo</a>
