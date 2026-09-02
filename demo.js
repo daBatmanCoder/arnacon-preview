@@ -13,63 +13,129 @@ const products = [
   { id: "lasereclipse110282", kind: "handle" },
   { id: "friends.identity", kind: "handle" }
 ];
-const chats = {
+const inboxes = {
+  "you@mail.com": {
+    "kai.eth": {
+      snip: "I am loving Arnacon so much", when: "24 Jun",
+      msgs: [
+        { k: "chip", t: "24/06/2026" },
+        { k: "out", t: "Hey how are you?", at: "14:02" },
+        { k: "in", t: "Great, and you?", at: "14:03" },
+        { k: "pill", t: "Incoming call", at: "14:05" },
+        { k: "pill", t: "Outgoing call", at: "14:05" },
+        { k: "out", t: "I am loving Arnacon so much", at: "14:07" },
+        { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:07" },
+        { k: "in", t: "Because you still thought you needed a number.", at: "14:08" },
+        { k: "in", t: "Call me as kai.eth — no number.", at: "14:08" },
+        { k: "out", t: "Wait. I called your ENS?", at: "14:09" },
+        { k: "in", t: "Encrypted end to end.", at: "14:09" },
+        { k: "out", t: "That's actually wild.", at: "14:10" },
+        { k: "in", t: "Switch identity whenever the context changes.", at: "14:10" },
+        { k: "out", t: "So I don't give out my number?", at: "14:11" },
+        { k: "in", t: "No SIM. No number on a bill.", at: "14:11" },
+        { k: "out", t: "Ok I'm downloading this for the team.", at: "14:12" },
+        { k: "in", t: "The brand is yours. Arnacon only enables it.", at: "14:12" },
+        { k: "pill", t: "Outgoing call", at: "14:13" },
+        { k: "in", t: "See you on work@mail.com.", at: "14:14" }
+      ]
+    },
+    "luna.eth": {
+      snip: "Hi", when: "19 Jun",
+      msgs: [
+        { k: "chip", t: "19/06/2026" },
+        { k: "in", t: "Hi", at: "10:01" },
+        { k: "out", t: "Hey", at: "10:02" }
+      ]
+    }
+  },
   "kai.eth": {
-    snip: "I am loving Arnacon so much", when: "24 Jun",
-    msgs: [
-      { k: "chip", t: "24/06/2026" },
-      { k: "out", t: "Hey how are you?", at: "14:02" },
-      { k: "in", t: "Great, and you?", at: "14:03" },
-      { k: "pill", t: "Incoming call", at: "14:05" },
-      { k: "pill", t: "Outgoing call", at: "14:05" },
-      { k: "out", t: "I am loving Arnacon so much", at: "14:07" },
-      { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:07" },
-      { k: "in", t: "Because you still thought you needed a number.", at: "14:08" },
-      { k: "in", t: "Call me as you@mail.com — no number.", at: "14:08" },
-      { k: "out", t: "Wait. I called your email?", at: "14:09" },
-      { k: "in", t: "Encrypted end to end.", at: "14:09" },
-      { k: "out", t: "That's actually wild.", at: "14:10" },
-      { k: "in", t: "Switch identity whenever the context changes.", at: "14:10" },
-      { k: "out", t: "So I don't give out my number?", at: "14:11" },
-      { k: "in", t: "No SIM. No number on a bill.", at: "14:11" },
-      { k: "out", t: "Ok I'm downloading this for the team.", at: "14:12" },
-      { k: "in", t: "The brand is yours. Arnacon only enables it.", at: "14:12" },
-      { k: "pill", t: "Outgoing call", at: "14:13" },
-      { k: "in", t: "See you on the other identity.", at: "14:14" }
-    ]
+    "hello@mail.com": {
+      snip: "See you there", when: "24 Jun",
+      msgs: [
+        { k: "chip", t: "24/06/2026" },
+        { k: "in", t: "Hey — trying Arnacon as you@mail.com.", at: "14:02" },
+        { k: "out", t: "Call me as kai.eth — no number.", at: "14:03" },
+        { k: "pill", t: "Incoming call", at: "14:05" },
+        { k: "in", t: "This is amazing.", at: "14:07" },
+        { k: "out", t: "Switch identity whenever the context changes.", at: "14:08" },
+        { k: "in", t: "See you on work@mail.com.", at: "14:09" },
+        { k: "out", t: "See you there", at: "14:09" }
+      ]
+    },
+    "atlas.ops": {
+      snip: "Incoming call", when: "19 Jun",
+      msgs: [
+        { k: "chip", t: "19/06/2026" },
+        { k: "pill", t: "Incoming call", at: "12:40" }
+      ]
+    }
   },
-  "hello@mail.com": {
-    snip: "Great, and you?", when: "24 Jun",
-    msgs: [
-      { k: "chip", t: "24/06/2026" },
-      { k: "out", t: "Hey — trying Arnacon.", at: "11:02" },
-      { k: "in", t: "Call me as you@mail.com — no number.", at: "11:03" },
-      { k: "pill", t: "Outgoing call", at: "11:04" },
-      { k: "out", t: "Hey how are you?", at: "14:02" },
-      { k: "in", t: "Great, and you?", at: "14:02" },
-      { k: "pill", t: "Incoming call", at: "14:05" },
-      { k: "pill", t: "Outgoing call", at: "14:05" },
-      { k: "pill", t: "Outgoing call", at: "14:06" },
-      { k: "out", t: "I am loving Arnacon so much", at: "14:07" },
-      { k: "out", t: "Why didn't you tell me about it sooner?", at: "14:08" },
-      { k: "in", t: "Switch identity whenever the context changes.", at: "14:08" },
-      { k: "in", t: "Encrypted end to end.", at: "14:09" },
-      { k: "out", t: "So this is my work identity.", at: "14:10" },
-      { k: "in", t: "I just picked a new identity for this.", at: "14:10" },
-      { k: "out", t: "Calling you now.", at: "14:11" },
-      { k: "in", t: "Want to hop on a call as the email?", at: "14:11" },
-      { k: "in", t: "Done. See you on the other identity.", at: "14:12" }
-    ]
+  "work@mail.com": {
+    "hello@mail.com": {
+      snip: "Done. See you later.", when: "24 Jun",
+      msgs: [
+        { k: "chip", t: "24/06/2026" },
+        { k: "out", t: "Switching to work identity.", at: "14:10" },
+        { k: "in", t: "I just picked this handle for work chats.", at: "14:10" },
+        { k: "out", t: "Calling you now.", at: "14:11" },
+        { k: "pill", t: "Outgoing call", at: "14:11" },
+        { k: "in", t: "Want to hop on a call later?", at: "14:11" },
+        { k: "in", t: "Done. See you later.", at: "14:12" }
+      ]
+    },
+    "team@company.co": {
+      snip: "Incoming call", when: "23 Jun",
+      msgs: [
+        { k: "chip", t: "23/06/2026" },
+        { k: "pill", t: "Incoming call", at: "09:15" },
+        { k: "in", t: "Quick sync?", at: "09:20" },
+        { k: "out", t: "Sure", at: "09:20" }
+      ]
+    }
   },
-  "*9225": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "09:12" }] },
-  "river.studio": { snip: "Outgoing call", when: "22 Jun", msgs: [{ k: "chip", t: "22/06/2026" }, { k: "pill", t: "Outgoing call", at: "16:20" }] },
-  "luna.eth": { snip: "Hi", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hi", at: "10:01" }, { k: "out", t: "Hey", at: "10:02" }] },
-  "atlas.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "12:40" }] },
-  "mira@work.co": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "13:11" }] },
-  "pixel.wave": { snip: "Outgoing call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Outgoing call", at: "15:02" }] },
-  "echo.wave": { snip: "Yo", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Yo", at: "18:22" }] },
-  "shop.identity": { snip: "Hii", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "in", t: "Hii", at: "19:01" }] },
-  "northline.ops": { snip: "Incoming call", when: "19 Jun", msgs: [{ k: "chip", t: "19/06/2026" }, { k: "pill", t: "Incoming call", at: "16:40" }] }
+  "vigilantviper243266": {
+    "pixel.wave": {
+      snip: "Outgoing call", when: "19 Jun",
+      msgs: [
+        { k: "chip", t: "19/06/2026" },
+        { k: "pill", t: "Outgoing call", at: "15:02" }
+      ]
+    },
+    "echo.wave": {
+      snip: "Yo", when: "19 Jun",
+      msgs: [
+        { k: "chip", t: "19/06/2026" },
+        { k: "in", t: "Yo", at: "18:22" }
+      ]
+    }
+  },
+  "nova.identity": {
+    "shop.identity": {
+      snip: "Hii", when: "19 Jun",
+      msgs: [
+        { k: "chip", t: "19/06/2026" },
+        { k: "in", t: "Hii", at: "19:01" }
+      ]
+    }
+  },
+  "lasereclipse110282": {
+    "river.studio": {
+      snip: "Outgoing call", when: "22 Jun",
+      msgs: [
+        { k: "chip", t: "22/06/2026" },
+        { k: "pill", t: "Outgoing call", at: "16:20" }
+      ]
+    }
+  },
+  "friends.identity": {
+    "northline.ops": {
+      snip: "Incoming call", when: "19 Jun",
+      msgs: [
+        { k: "chip", t: "19/06/2026" },
+        { k: "pill", t: "Incoming call", at: "16:40" }
+      ]
+    }
+  }
 };
 const replies = [
   "Call me as you@mail.com — no number.",
@@ -143,6 +209,7 @@ function openDrawer(on){
   if (on) renderDrawer();
 }
 function renderChats(){
+  const chats = inboxes[me] || {};
   const rows = Object.entries(chats).map(([id,c])=>`
     <div class="row" data-open="${id}">
       <div class="avatar">${initial(id)}</div>
@@ -153,7 +220,9 @@ function renderChats(){
   $("view").innerHTML = idbar()+`<div class="list">${rows}</div>`+tabs();
 }
 function renderThread(){
+  const chats = inboxes[me] || {};
   const c = chats[threadId];
+  if (!c) { screen = "chats"; threadId = null; render(); return; }
   const msgs = c.msgs.map(m=>{
     if (m.k==="chip") return `<div class="chip">${m.t}</div>`;
     if (m.k==="pill") return `<div class="pill">${m.t}<small>${m.at||""}</small></div>`;
@@ -213,6 +282,7 @@ function renderCall(){
 }
 function hang(){
   if (callIv) clearInterval(callIv);
+  const chats = inboxes[me] || {};
   if (callFor && chats[callFor]) chats[callFor].msgs.push({k:"pill", t:"Outgoing call", at: now()});
   callFor = null; screen = threadId ? "thread" : (tab==="dialer"?"dialer":"chats");
   render(); $("cta").classList.add("on");
@@ -229,7 +299,7 @@ document.getElementById("app").addEventListener("click", e=>{
   const ham = e.target.closest("#ham"); if (ham) { openDrawer(true); return; }
   if (e.target.closest("#scrim")) { openDrawer(false); return; }
   const prod = e.target.closest(".prod");
-  if (prod && !e.target.closest(".copy")) { me = prod.dataset.id; openDrawer(false); render(); return; }
+  if (prod && !e.target.closest(".copy")) { me = prod.dataset.id; threadId = null; screen = "chats"; tab = "chats"; openDrawer(false); render(); return; }
   const cp = e.target.closest("[data-copy]");
   if (cp) { navigator.clipboard && navigator.clipboard.writeText(cp.dataset.copy); return; }
   const tb = e.target.closest("[data-tab]");
@@ -245,7 +315,8 @@ document.getElementById("app").addEventListener("click", e=>{
   if (e.target.closest("[data-call-dial]")) { startCall(dial || "you@mail.com"); return; }
   if (e.target.closest("[data-msg-dial]")) {
     const id = dial || "you@mail.com";
-    if (!chats[id]) chats[id] = { snip: "New chat", when: "now", msgs: [{k:"chip", t: now()}] };
+    if (!inboxes[me]) inboxes[me] = {};
+    if (!inboxes[me][id]) inboxes[me][id] = { snip: "New chat", when: "now", msgs: [{k:"chip", t: now()}] };
     threadId = id; tab="chats"; screen="thread"; render(); return;
   }
   if (e.target.closest("#hang") || e.target.closest("#min")) { hang(); return; }
@@ -257,6 +328,8 @@ document.getElementById("app").addEventListener("submit", e=>{
   e.preventDefault();
   const input = e.target.m;
   const text = (input.value||"").trim(); if (!text) return;
+  const chats = inboxes[me] || {};
+  if (!chats[threadId]) return;
   chats[threadId].msgs.push({k:"out", t:text, at: now()});
   chats[threadId].snip = text;
   input.value = "";
