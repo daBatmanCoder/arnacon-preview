@@ -1,1 +1,40 @@
-FILE_VERSIONS_HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arnacon — five homepages</title>
+<link rel="icon" href="arnacon-logo.svg?v=4">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Archivo,system-ui,sans-serif;background:#0c0c0e;color:#eee;padding:28px 20px 80px}
+a{color:inherit;text-decoration:none}
+header{max-width:980px;margin:0 auto 36px;display:flex;gap:14px;align-items:center}
+header img{width:36px;height:36px;border-radius:10px}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:400;letter-spacing:-.03em;margin:0}
+.sub{max-width:980px;margin:0 auto 28px;color:#eee9;line-height:1.5}
+.grid{max-width:980px;margin:0 auto;display:grid;gap:14px}
+.card{display:grid;grid-template-columns:88px 1fr auto;gap:16px;align-items:center;padding:16px;border:1px solid #ffffff14;border-radius:16px;background:#141416}
+.card:hover{border-color:#ffffff33}
+.sw{width:88px;height:64px;border-radius:10px}
+.t{font-size:1.05rem;margin:0 0 4px}
+.d{margin:0;color:#eee8;font-size:13px;line-height:1.4}
+.go{font-size:13px;opacity:.6}
+.now{margin-top:28px;max-width:980px;margin-left:auto;margin-right:auto;color:#eee7;font-size:14px}
+@media(max-width:640px){.card{grid-template-columns:64px 1fr}.go{display:none}.sw{width:64px;height:48px}}
+</style>
+</head>
+<body>
+<header><a href="versions.html?v=7" style="display:flex;gap:14px;align-items:center;color:inherit"><img src="arnacon-logo.svg?v=4" alt=""><div><h1>Five homepages</h1></div></a></header>
+<p class="sub">Same story on every version: talk as your email, or as a new identity. You choose the privacy. You bring the brand. We only enable. WhatsApp is a door, not the house. Different clothes. Dawn is now the root.</p>
+<div class="grid">
+<a class="card" href="v1.html?v=7"><div class="sw" style="background:linear-gradient(135deg,#07090d,#0e76ff)"></div><div><p class="t">Studio</p><p class="d">Full site in the local Studio look. Email and a new identity as equals.</p></div><span class="go">v1 →</span></a>
+<a class="card" href="v2.html?v=7"><div class="sw" style="background:linear-gradient(135deg,#f3ead7,#9c2b1a)"></div><div><p class="t">Paper</p><p class="d">Full magazine site. Cream stock, Fraunces. Same story as the main preview.</p></div><span class="go">v2 →</span></a>
+<a class="card" href="v3.html?v=7"><div class="sw" style="background:linear-gradient(135deg,#070807,#c8ff00)"></div><div><p class="t">Signal</p><p class="d">Brutalist mono. Acid lime. Same story as the main preview.</p></div><span class="go">v3 →</span></a>
+<a class="card" href="index.html"><div class="sw" style="background:linear-gradient(135deg,#fff7f1,#ff6b4a)"></div><div><p class="t">Dawn — Live</p><p class="d">The current root homepage. Realistic phone, interactive privacy, cream & coral.</p></div><span class="go">live →</span></a>
+<a class="card" href="v4.html?v=7"><div class="sw" style="background:linear-gradient(135deg,#fff7f1,#ff6b4a)"></div><div><p class="t">Dawn (v4)</p><p class="d">Daylight. Coral pills, sticky glass nav. Same full story.</p></div><span class="go">v4 →</span></a>
+<a class="card" href="v5.html?v=7"><div class="sw" style="background:linear-gradient(135deg,#09060e,#a855f7)"></div><div><p class="t">Cinema</p><p class="d">Night. Full-bleed glow. Same full story, identity in the headline.</p></div><span class="go">v5 →</span></a>
+</div>
+<p class="now"><a href="demo.html?v=5">Demo</a> is shared. <a href="privacy.html">Privacy</a> is on this site, not at the maker. <a href="blog.html">Blog</a>.</p>
+</body>
+</html>
